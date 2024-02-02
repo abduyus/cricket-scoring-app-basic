@@ -1,7 +1,14 @@
 /* 
 Main Colours: #22b8cf
-secondary color: #ff8787
+secondary color: #e54624
  */
+:root {
+  --main-color: #22b8cf;
+  --secondary-color: #e54624;
+
+  --main-color--darker: #0a373e;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -22,4 +29,15 @@ body {
 .container {
   max-width: 120rem;
   margin: 0 auto;
+}
+
+.subheading {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 4.8rem;
 }
