@@ -50,6 +50,27 @@ const getCricket = async function () {
   }
 };
 
+// FOR CRICBUZZ API FOR LIVESCORE
+///////////////////////////////////////////////////////////
+const url =
+  "https://unofficial-cricbuzz.p.rapidapi.com/matches/list?matchState=live";
+const options = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
+    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
+  },
+};
+
+try {
+  const response = await fetch(url, options);
+  const result = await response.json();
+  console.log(result);
+} catch (error) {
+  console.error(error);
+}
+///////////////////////////////////////////////////////////
+
 getCricket();
 
 const getNews = async function () {

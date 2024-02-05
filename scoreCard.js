@@ -19,6 +19,13 @@ const renderScoreCard = function (data) {
     ? " & " + data.Events[0].Tr2C2
     : "&nbsp;";
 
+  let resultT1S2W = data.Events[0].Tr1CW2
+    ? "/" + data.Events[0].Tr1CW2
+    : "&nbsp;";
+  let resultT2S2W = data.Events[0].Tr2CW2
+    ? "/" + data.Events[0].Tr2CW2
+    : "&nbsp;";
+
   console.log(resultT1);
 
   let t1Flag = data.Events[0].T1[0].Abr;
@@ -59,7 +66,7 @@ const renderScoreCard = function (data) {
         <div class="score score--team-1">
           <span class="team1-score">${
             data.Events[0].Tr1C1 || "   "
-          }${resultT1} ${resultT1S2}</span>
+          }${resultT1} ${resultT1S2}${resultT1S2W}</span>
           <span class="team-overs team1-overs">${
             data.Events[0].Tr1CO1 || ""
           }</span>
@@ -67,7 +74,7 @@ const renderScoreCard = function (data) {
         <div class="score score--team-2">
           <span class="team2-score">${
             data.Events[0].Tr2C1 || "   "
-          }${resultT2} ${resultT2S2}</span>
+          }${resultT2} ${resultT2S2}${resultT2S2W}</span>
           <span class="team-overs team2-overs">${
             data.Events[0].Tr2CO1 || ""
           }</span>
@@ -80,7 +87,7 @@ const renderScoreCard = function (data) {
   </div>
       `;
 
-  matchesCardContainer.insertAdjacentHTML("afterbegin", html);
+  matchesCardContainer.insertAdjacentHTML("beforeend", html);
 };
 
 const renderMultipleScoreCard = function (data) {
@@ -90,8 +97,10 @@ const renderMultipleScoreCard = function (data) {
   let resultT2 = data.Tr2CW1 ? "/" + data.Tr2CW1 : " &nbsp;";
 
   let resultT1S2 = data.Tr1C2 ? " & " + data.Tr1C2 : "&nbsp;";
+  let resultT1S2W = data.Tr1CW2 ? "/" + data.Tr2CW2 : "&nbsp;";
 
   let resultT2S2 = data.Tr2C2 ? " & " + data.Tr2C2 : "&nbsp;";
+  let resultT2S2W = data.Tr2CW2 ? "/" + data.Tr2CW2 : "&nbsp;";
 
   console.log(resultT1);
 
@@ -133,13 +142,13 @@ const renderMultipleScoreCard = function (data) {
         <div class="score score--team-1">
           <span class="team1-score">${
             data.Tr1C1 || "   "
-          }${resultT1} ${resultT1S2}</span>
+          }${resultT1} ${resultT1S2}${resultT1S2W}</span>
           <span class="team-overs team1-overs">${data.Tr1CO1 || ""}</span>
         </div>
         <div class="score score--team-2">
           <span class="team2-score">${
             data.Tr2C1 || "   "
-          }${resultT2} ${resultT2S2}</span>
+          }${resultT2} ${resultT2S2}${resultT2S2W}</span>
           <span class="team-overs team2-overs">${data.Tr2CO1 || ""}</span>
         </div>
       </div>
@@ -150,7 +159,7 @@ const renderMultipleScoreCard = function (data) {
   </div>
       `;
 
-  matchesCardContainer.insertAdjacentHTML("afterbegin", html);
+  matchesCardContainer.insertAdjacentHTML("beforeend", html);
 };
 
 export { renderScoreCard, renderMultipleScoreCard };
