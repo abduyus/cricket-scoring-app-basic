@@ -1,7 +1,7 @@
 "use strict";
 
 import { renderNews } from "./renderNews.js";
-import { renderScoreCard, renderMultipleScoreCard } from "./scoreCard.js";
+import { renderScoreCard, renderPreviewMatch } from "./scoreCard.js";
 
 const matchesCardContainer = document.querySelector(".matches-container");
 
@@ -20,58 +20,50 @@ elements.forEach((element) => {
   }
 });
 
+// FOR CRICBUZZ API FOR LIVESCORE
+///////////////////////////////////////////////////////////
 const getCricket = async function () {
   const url =
-    "https://livescore6.p.rapidapi.com/matches/v2/list-live?Category=cricket";
+    "https://unofficial-cricbuzz.p.rapidapi.com/matches/list?matchState=live";
   const options = {
     method: "GET",
     headers: {
       "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
-      "X-RapidAPI-Host": "livescore6.p.rapidapi.com",
+      "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
     },
   };
 
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
-    result.Stages.forEach((match) => {
-      console.log(match);
-      // if (match.Events.length !== 1) {
-      //   match.Events.forEach((match) => renderMultipleScoreCard(match));
-      // }
+    const seriesMatches = result.typeMatches
+      .map((match) => match.seriesAdWrapper)
+      .flatMap(
+        (array) =>
+          array
+            .filter((item) => item.seriesMatches) // Filter out items without seriesMatches
+            .map((item) => item.seriesMatches) // Extract seriesMatches
+      )
+      .forEach((match) =>
+        match.matches.forEach((matchToRender) => {
+          console.log(matchToRender, 111111111);
+          if (matchToRender.hasOwnProperty("matchScore")) {
+            console.log(matchToRender, 333333);
+            renderScoreCard(matchToRender);
+          } else {
+            console.log(matchToRender, 2222222);
+            renderPreviewMatch(matchToRender);
+          }
+        })
+      );
 
-      match.Events.length !== 1
-        ? match.Events.forEach((match) => renderMultipleScoreCard(match))
-        : renderScoreCard(match);
-    });
+    console.log(seriesMatches);
   } catch (error) {
     console.error(error);
   }
 };
-
-// FOR CRICBUZZ API FOR LIVESCORE
-///////////////////////////////////////////////////////////
-const url =
-  "https://unofficial-cricbuzz.p.rapidapi.com/matches/list?matchState=live";
-const options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
-    "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-  },
-};
-
-try {
-  const response = await fetch(url, options);
-  const result = await response.json();
-  console.log(result);
-} catch (error) {
-  console.error(error);
-}
-///////////////////////////////////////////////////////////
-
 getCricket();
+///////////////////////////////////////////////////////////
 
 const getNews = async function () {
   const url = "https://unofficial-cricbuzz.p.rapidapi.com/news/list";
@@ -86,11 +78,11 @@ const getNews = async function () {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
+
     const newsList = result.newsList.slice(0, 4); // Get the first 3 elements
     newsList.forEach((news) => {
       if (!news.story) return;
-      console.log(news);
+
       renderNews(news);
     });
   } catch (error) {
