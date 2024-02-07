@@ -36,10 +36,8 @@ const renderScoreCard = function (data) {
   const html = `
     <div class="match">
     <p class="match-info">
-      <span class="match-live--status">${data.matchInfo.status}</span> &bull;
-      <span class="match-date">${formatDate(
-        data.matchInfo.startDate
-      )}</span> &bull;
+      <span class="match-live--status">${data.matchInfo.state}</span> &bull;
+      <span class="match-date">${data.matchInfo.matchDesc}</span> &bull;
       <span class="match-league">${data.matchInfo.seriesName}</span> &bull;
       <span class="match-format">${data.matchInfo.matchFormat}</span>
   
@@ -76,7 +74,8 @@ const renderScoreCard = function (data) {
               ? data.matchScore.team1Score.inngs1.runs
               : " "
           }${
-    data.matchScore.team1Score.inngs1.wickets
+    data.matchScore.team1Score.inngs1.wickets ||
+    data.matchScore.team1Score.inngs1.wickets === 0
       ? "/" + data.matchScore.team1Score.inngs1.wickets
       : " "
   }${
@@ -100,7 +99,8 @@ const renderScoreCard = function (data) {
               ? data.matchScore.team2Score.inngs1.runs
               : " "
           }${
-    data?.matchScore?.team2Score?.inngs1.wickets
+    data?.matchScore?.team2Score?.inngs1.wickets ||
+    data?.matchScore?.team2Score?.inngs1.wickets === 0
       ? "/" + data.matchScore.team2Score.inngs1.wickets
       : " "
   }${
@@ -133,10 +133,8 @@ const renderPreviewMatch = function (data) {
   const html = `
     <div class="match">
     <p class="match-info">
-      <span class="match-live--status">${data.matchInfo.status}</span> &bull;
-      <span class="match-date">${formatDate(
-        data.matchInfo.startDate
-      )}</span> &bull;
+      <span class="match-live--status">${data.matchInfo.state}</span> &bull;
+      <span class="match-date">${data.matchInfo.matchDesc}</span> &bull;
       <span class="match-league">${data.matchInfo.seriesName}</span> &bull;
       <span class="match-format">${data.matchInfo.matchFormat}</span>
   
@@ -145,12 +143,16 @@ const renderPreviewMatch = function (data) {
       <div class="match-teams">
         <div class="team-logos">
           <img
-            src="${data.matchInfo.team1.imageId}"
+            src="http://api.cricbuzz.com/a/img/v1/i1/c${
+              data.matchInfo.team1.imageId
+            }/i.jpg?p=thumb&d=high"
             class="team-logo"
             alt="&nbsp;"
           />
           <img
-            src="${data.matchInfo.team2.imageId}"
+            src="http://api.cricbuzz.com/a/img/v1/i1/c${
+              data.matchInfo.team2.imageId
+            }/i.jpg?p=thumb&d=high"
             class="team-logo"
             alt="&nbsp;"
           />
