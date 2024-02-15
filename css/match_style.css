@@ -1,0 +1,335 @@
+html {
+  font-size: 62.5%;
+}
+
+.header {
+  padding: 2.4rem 0;
+  background-color: #fff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 4.8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-nav-link:link,
+.main-nav-link:visited {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--main-color);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  transition: color 0.3s;
+}
+
+.section-result {
+  margin: 9.6rem 0;
+}
+
+.section-result .container {
+  background-color: #fff;
+  padding: 2.4rem;
+  border-radius: 2rem;
+  box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.03);
+}
+
+.match-result {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+  align-self: center;
+  justify-self: center;
+  /* margin-bottom: 4.8rem; */
+}
+
+.match-teams {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.match-info {
+  font-size: 1.8rem;
+  color: #666;
+  margin-bottom: 2.4rem;
+}
+
+.matches-status--live {
+  background-color: var(--secondary-color);
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10rem;
+  margin-right: 1rem;
+}
+
+.matches-league--link:link,
+.matches-league--link:visited {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: inherit;
+  border-bottom: 1px solid #666;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.matches-league--link:hover,
+.matches-league--link:active {
+  color: var(--main-color);
+  border-bottom: none;
+}
+
+.matches-scores {
+  padding: 2.4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  background-color: #f1f3f5;
+  border-radius: 2rem;
+  padding-bottom: 4.8rem;
+}
+
+.matches--team1-img {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+  box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.17);
+}
+
+.matches--team1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-right: 3rem;
+}
+
+.matches--team1-total {
+  font-size: 2rem;
+  font-weight: 600;
+  /* margin-right: 1.6rem; */
+}
+
+.matches--team1-overs {
+  /* font-size: 1.7rem; */
+  color: #666;
+  font-weight: 700;
+}
+
+.matches--team1--score {
+  display: flex;
+
+  gap: 2.4rem;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.matches--team2-img {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+  box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.17);
+}
+
+.matches--team2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-right: 3rem;
+}
+
+.matches--team2-total {
+  font-size: 2rem;
+  font-weight: 600;
+  /* margin-right: 1.6rem; */
+}
+
+.matches--team2-overs {
+  font-size: 1.7rem;
+  color: #666;
+  font-weight: 700;
+}
+
+.matches--team2--score {
+  display: flex;
+  gap: 2.4rem;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.matches--summary {
+  margin-top: 1.8rem;
+  margin-left: 1.8rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.matches--last-6balls {
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+  /* justify-content: center; */
+  margin-left: 2.4rem;
+  font-size: 2rem;
+  margin-top: 1.6rem;
+}
+
+.matches--last-6balls span {
+  font-weight: 600;
+  color: #666;
+  /* background-color: red; */
+  border-radius: 50%;
+  width: 4rem; /* Set the width to desired size */
+  height: 4rem; /* Set the height to desired size */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.matches--wicket {
+  background-color: #e64980;
+  color: #fff !important;
+}
+
+.matches--dot {
+  background-color: #bebebe;
+  color: #fff !important;
+}
+
+.matches--four {
+  background-color: #5cb85c;
+  color: #fff !important;
+}
+
+.matches--wide {
+  background-color: #f0ad4e;
+  color: #fff !important;
+}
+
+.info {
+  font-size: 2.4rem;
+  color: #666;
+  margin-bottom: 2.4rem;
+}
+
+.btn {
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  font-size: 1.8rem;
+  /* color: #555; */
+  color: #777;
+  transition: all 0.3s;
+  padding: 1.6rem 1.8rem;
+  border-radius: 1.7rem;
+  transition: all 0.3s;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.operations {
+  max-width: 200rem;
+  /* margin: 12rem auto 0 auto; */
+
+  /* background-color: #f3f3f3; */
+}
+
+.operations__tab-container {
+  display: flex;
+  gap: 2.4rem;
+  background-color: #ffffff;
+  /* padding: 1.6rem 0; */
+  border-radius: 3rem;
+  /* box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.07); */
+  /* transform: translate(-50%, -120%); */
+  /* opacity: 0;
+  visibility: hidden; */
+  transition: all 0.3s;
+  justify-content: center;
+  z-index: 999;
+}
+
+.operations__tab--active {
+  background-color: #e9ecef;
+}
+
+/* .operations__tab {
+  margin-right: 2.5rem;
+  transform: translateY(-50%);
+} */
+
+.operations__tab span {
+  margin-right: 1rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.operations__content {
+  display: none;
+
+  /* JUST PRESENTATIONAL */
+  font-size: 1.7rem;
+  padding-top: 2.5rem;
+}
+
+.operations__content--active {
+  display: block;
+}
+
+.live--title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-left: 7rem;
+}
+
+table {
+  margin-top: 1.2rem;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+thead {
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.bowler--live {
+  background-color: var(--secondary-color);
+}
+
+th {
+  text-align: start;
+}
+
+th,
+td {
+  padding: 1.2rem 2.4rem;
+  font-size: 1.8rem;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #e9ecef;
+}
+
+.live--bowling {
+  justify-self: center;
+}
+
+.live--bat-name {
+  font-weight: 600;
+  color: var(--main-color);
+}
+
+.live--bowler-name {
+  font-weight: 600;
+  color: var(--secondary-color);
+}
