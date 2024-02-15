@@ -74,17 +74,20 @@ const renderScoreCard = function (data) {
               ? data.matchScore.team1Score.inngs1.runs
               : " "
           }${
-    data.matchScore.team1Score.inngs1.wickets ||
-    data.matchScore.team1Score.inngs1.wickets === 0
+    data.matchScore.team1Score.inngs1.wickets !== undefined
       ? "/" + data.matchScore.team1Score.inngs1.wickets
+      : data.matchScore.team1Score.inngs1.runs !== undefined
+      ? "/0"
       : " "
   }${
     data.matchScore.team1Score.inngs2?.runs
       ? " & " + data.matchScore.team1Score.inngs2?.runs
       : " "
   }${
-    data.matchScore.team1Score.inngs2?.wickets
-      ? "/" + data.matchScore.team1Score.inngs2?.wickets
+    data.matchScore.team1Score?.inngs2?.wickets !== undefined
+      ? "/" + data.matchScore.team1Score.inngs2.wickets
+      : data.matchScore.team1Score.inngs2?.runs !== undefined
+      ? "/0"
       : " "
   }</span>
           <span class="team-overs team1-overs">${
@@ -94,27 +97,30 @@ const renderScoreCard = function (data) {
           }</span>
         </div>
         <div class="score score--team-2">
-          <span class="team2-score">${
-            data?.matchScore?.team2Score?.inngs1.runs
-              ? data.matchScore.team2Score.inngs1.runs
-              : " "
-          }${
-    data?.matchScore?.team2Score?.inngs1.wickets ||
-    data?.matchScore?.team2Score?.inngs1.wickets === 0
+        <span class="team2-score">${
+          data?.matchScore?.team2Score?.inngs1?.runs
+            ? data.matchScore.team2Score.inngs1.runs
+            : " "
+        }${
+    data?.matchScore?.team2Score?.inngs1?.wickets !== undefined
       ? "/" + data.matchScore.team2Score.inngs1.wickets
+      : data?.matchScore?.team2Score?.inngs1?.runs !== undefined
+      ? "/0"
       : " "
   }${
-    data.matchScore.team2Score?.inngs2?.runs
-      ? " & " + data.matchScore.team2Score?.inngs2?.runs
+    data?.matchScore?.team2Score?.inngs2?.runs
+      ? " & " + data.matchScore.team2Score.inngs2.runs
       : " "
   }${
-    data.matchScore.team2Score?.inngs2?.wickets
-      ? "/" + data.matchScore.team2Score?.inngs2?.wickets
+    data?.matchScore?.team2Score?.inngs2?.wickets !== undefined
+      ? "/" + data.matchScore.team2Score.inngs2.wickets
+      : data?.matchScore?.team2Score?.inngs2?.runs !== undefined
+      ? "/0"
       : " "
   }</span>
           <span class="team-overs team2-overs">${
-            data?.matchScore?.team2Score?.inngs1.overs
-              ? data.matchScore.team2Score.inngs1.overs
+            data?.matchScore?.team2Score?.inngs1?.overs
+              ? data.matchScore.team2Score.inngs1?.overs
               : " "
           }</span>
         </div>

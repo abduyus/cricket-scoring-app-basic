@@ -23,39 +23,79 @@ elements.forEach((element) => {
 // FOR CRICBUZZ API FOR LIVESCORE
 ///////////////////////////////////////////////////////////
 const getCricket = async function () {
-  const url =
-    "https://unofficial-cricbuzz.p.rapidapi.com/matches/list?matchState=live";
+  // const url =
+  //   "https://unofficial-cricbuzz.p.rapidapi.com/matches/list?matchState=live";
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
+  //     "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
+  //   },
+  // };
+  const url = "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live";
   const options = {
     method: "GET",
     headers: {
       "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
-      "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
+      "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
     },
   };
 
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    const seriesMatches = result.typeMatches
-      .map((match) => match.seriesAdWrapper)
-      .flatMap(
-        (array) =>
-          array
-            .filter((item) => item.seriesMatches) // Filter out items without seriesMatches
-            .map((item) => item.seriesMatches) // Extract seriesMatches
-      )
-      .forEach((match) =>
-        match.matches.forEach((matchToRender) => {
-          console.log(matchToRender, 111111111);
-          if (matchToRender.hasOwnProperty("matchScore")) {
-            console.log(matchToRender, 333333);
-            renderScoreCard(matchToRender);
-          } else {
-            console.log(matchToRender, 2222222);
-            renderPreviewMatch(matchToRender);
-          }
+    console.log(result);
+    // const seriesMatches = result.typeMatches
+    //   .map((match) => match.seriesAdWrapper)
+    //   .flatMap(
+    //     (array) =>
+    //       array
+    //         .filter((item) => item.seriesMatches) // Filter out items without seriesMatches
+    //         .map((item) => item.seriesMatches) // Extract seriesMatches
+    //   )
+    //   .forEach((match) =>
+    //     match.matches.forEach((matchToRender) => {
+    //       console.log(matchToRender, 111111111);
+    //       if (matchToRender.hasOwnProperty("matchScore")) {
+    //         console.log(matchToRender, 333333);
+    //         renderScoreCard(matchToRender);
+    //       } else {
+    //         console.log(matchToRender, 2222222);
+    //         renderPreviewMatch(matchToRender);
+    //       }
+    //     })
+    //   );
+    const seriesMatches = result.typeMatches.map(
+      (match) => match.seriesMatches
+    );
+
+    const series = seriesMatches.map((array) => {
+      console.log(array);
+      return array
+        .map((obj) => {
+          if (!obj.seriesAdWrapper) return null;
+          return obj.seriesAdWrapper;
         })
-      );
+        .filter(Boolean); // this will remove null values
+    });
+    console.log(series, "hhhhhhhhh");
+
+    const seriesM = series.flat();
+
+    console.log(series.flat());
+
+    seriesM.forEach((match) =>
+      match.matches.forEach((matchToRender) => {
+        console.log(matchToRender, 111111111);
+        if (matchToRender.hasOwnProperty("matchScore")) {
+          console.log(matchToRender, 333333);
+          renderScoreCard(matchToRender);
+        } else {
+          console.log(matchToRender, 2222222);
+          renderPreviewMatch(matchToRender);
+        }
+      })
+    );
 
     console.log(seriesMatches);
   } catch (error) {
@@ -66,12 +106,12 @@ getCricket();
 ///////////////////////////////////////////////////////////
 
 const getNews = async function () {
-  const url = "https://unofficial-cricbuzz.p.rapidapi.com/news/list";
+  const url = "https://cricbuzz-cricket.p.rapidapi.com/news/v1/index";
   const options = {
     method: "GET",
     headers: {
       "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
-      "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
+      "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
     },
   };
 
@@ -79,7 +119,7 @@ const getNews = async function () {
     const response = await fetch(url, options);
     const result = await response.json();
 
-    const newsList = result.newsList.slice(0, 4); // Get the first 3 elements
+    const newsList = result.storyList.slice(0, 4); // Get the first 3 elements
     newsList.forEach((news) => {
       if (!news.story) return;
 
