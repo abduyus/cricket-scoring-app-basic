@@ -27,7 +27,7 @@ html {
 }
 
 .section-result {
-  margin: 9.6rem 0;
+  margin: 4.8rem 0;
 }
 
 .section-result .container {
@@ -84,14 +84,19 @@ html {
   border-bottom: none;
 }
 
+.matches {
+  display: flex;
+  gap: 12.8rem;
+  background-color: #f1f3f5;
+  border-radius: 2rem;
+  padding-bottom: 4.8rem;
+}
+
 .matches-scores {
   padding: 2.4rem 0;
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
-  background-color: #f1f3f5;
-  border-radius: 2rem;
-  padding-bottom: 4.8rem;
 }
 
 .matches--team1-img {
@@ -181,7 +186,9 @@ html {
   margin-top: 1.6rem;
 }
 
-.matches--last-6balls span {
+.matches--last-6balls span,
+.commentary-item--runs,
+.summary-text span {
   font-weight: 600;
   color: #666;
   /* background-color: red; */
@@ -213,10 +220,45 @@ html {
   color: #fff !important;
 }
 
-.info {
-  font-size: 2.4rem;
-  color: #666;
-  margin-bottom: 2.4rem;
+.matches--six {
+  background-color: #7a41d8;
+  color: #fff !important;
+}
+
+.matches--no-ball {
+  background-color: #f0ad4e;
+  color: #fff !important;
+}
+
+.matches--byes {
+  background-color: #66d9e8;
+  color: #fff !important;
+}
+
+.matches--single {
+  background-color: #bebebe;
+  color: #fff !important;
+}
+
+.matches--double {
+  background-color: #bebebe;
+  color: #fff !important;
+}
+
+.matches--triple {
+  background-color: #f0ac4ea9;
+  color: #fff !important;
+}
+
+.match--detail {
+  font-size: 1.8rem;
+  color: #777;
+  padding: 1.2rem 2.4rem;
+  border-radius: 1.2rem;
+  display: block;
+  align-self: center;
+  justify-self: center;
+  /* box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.07); */
 }
 
 .btn {
@@ -289,6 +331,9 @@ html {
   margin-left: 7rem;
 }
 
+/* ////////////////////////////////// */
+/* Live section */
+
 table {
   margin-top: 1.2rem;
   border-spacing: 0;
@@ -332,4 +377,192 @@ tbody tr:nth-child(even) {
 .live--bowler-name {
   font-weight: 600;
   color: var(--secondary-color);
+}
+
+.over--summary {
+  margin-top: 2.4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.summary-text {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.over--desc {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #666;
+  display: inline;
+}
+
+/* Commentary section */
+
+.commentary--wicket {
+  color: #e64980;
+  /* color: #fff !important; */
+}
+
+.commentary--dot {
+  color: #777;
+  /* color: #fff !important; */
+}
+
+.commentary--single {
+  color: #777;
+  /* color: #fff !important; */
+}
+
+.commentary--double {
+  color: #777;
+  /* color: #fff !important; */
+}
+
+.commentary--triple {
+  color: #f0ac4ea9;
+  /* color: #fff !important; */
+}
+
+.commentary--four {
+  color: #5cb85c;
+  /* color: #fff !important; */
+}
+
+.commentary--wide {
+  color: #f0ad4e;
+  /* color: #fff !important; */
+}
+
+.commentary--no-ball {
+  color: #f0ad4e;
+  /* color: #fff !important; */
+}
+
+.commentary--byes {
+  color: #089bae;
+  /* color: #fff !important; */
+}
+
+.commentary--six {
+  color: #7a41d8;
+  /* color: #fff !important; */
+}
+
+.commentary-item {
+  display: flex;
+  gap: 4.8rem;
+  margin-right: 2.4rem;
+  background-color: #f1f3f5;
+  padding: 1.6rem 2.4rem;
+  border-radius: 1.2rem;
+  margin-bottom: 1.6rem;
+  /* box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.07); */
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.commentary-item--overs {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #666;
+  align-self: center;
+  justify-self: center;
+}
+
+.commentary-item--balls {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.commentary-item--info {
+  font-size: 1.8rem;
+  font-weight: 600;
+
+  align-self: center;
+  justify-self: center;
+}
+
+.commentary-item--over {
+  background-color: #e7f0ff;
+  margin-bottom: 1.2rem;
+}
+
+.over--heading-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* gap: 2.4rem; */
+}
+
+.over {
+  display: flex;
+  flex-direction: column;
+  /* font-size: 2rem; */
+  font-weight: 600;
+  /* color: var(--main-color); */
+  padding: 1.8rem;
+  border-right: 2px solid #fff;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  font-size: 2rem;
+}
+
+.over-heading {
+  border-left: 2px solid #fff;
+}
+
+.over--sm {
+  font-size: 1.8rem;
+}
+
+/* .over:nth-child(even) {
+  color: #da77f2;
+}
+
+.over:nth-child(odd) {
+  color: #3bc9db;
+} */
+
+.over.batsmen--score span {
+  font-size: inherit;
+}
+
+.table--score {
+  margin-bottom: 5.4rem;
+}
+
+/* .over-heading {
+  color: var(--main-color);
+}
+
+.bat-over {
+  color: var(--secondary-color);
+} */
+
+/* Screcard section */
+
+.operations__header {
+  font-size: 3rem;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 2.4rem;
+}
+
+.operations__header.squad {
+  transform: translate(-10%);
+}
+.yet-to-bat {
+  margin-top: 2.4rem;
+  color: #777;
+  font-weight: 600;
+}
+
+.yet-to-batsmen {
+  margin-top: 2.4rem;
+  font-weight: 700;
+  color: var(--main-color);
 }

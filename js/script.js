@@ -1,24 +1,30 @@
-"use strict";
+'use strict';
 
-import { renderNews } from "./renderNews.js";
-import { renderScoreCard, renderPreviewMatch } from "./scoreCard.js";
+import { renderNews } from './renderNews.js';
+import { renderScoreCard, renderPreviewMatch } from './scoreCard.js';
 
-const matchesCardContainer = document.querySelector(".matches-container");
+const matchesCardContainer = document.querySelector('.matches-container');
 
-const dateString = "20240117063000";
+const dateString = '20240117063000';
 // console.log(formatDate(dateString)); // Outputs: "6:30 Today" (if today's date is 2024-01-17)
 
 // Select the elements
-const elements = document.querySelectorAll(".score");
+const elements = document.querySelectorAll('.score');
 
 // Loop through each element
-elements.forEach((element) => {
+elements.forEach(element => {
   // Check if the text content is empty
-  if (element.textContent.trim() === "") {
+  if (element.textContent.trim() === '') {
     // Set the width to 0
-    element.style.width = "0";
+    element.style.width = '0';
   }
 });
+
+const state = {
+  matchArr: [],
+};
+
+export { state };
 
 // FOR CRICBUZZ API FOR LIVESCORE
 ///////////////////////////////////////////////////////////
@@ -32,66 +38,49 @@ const getCricket = async function () {
   //     "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
   //   },
   // };
-  const url = "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live";
+  const url = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live';
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
-      "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
+      'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
+      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
     },
   };
 
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
-    // const seriesMatches = result.typeMatches
-    //   .map((match) => match.seriesAdWrapper)
-    //   .flatMap(
-    //     (array) =>
-    //       array
-    //         .filter((item) => item.seriesMatches) // Filter out items without seriesMatches
-    //         .map((item) => item.seriesMatches) // Extract seriesMatches
-    //   )
-    //   .forEach((match) =>
-    //     match.matches.forEach((matchToRender) => {
-    //       console.log(matchToRender, 111111111);
-    //       if (matchToRender.hasOwnProperty("matchScore")) {
-    //         console.log(matchToRender, 333333);
-    //         renderScoreCard(matchToRender);
-    //       } else {
-    //         console.log(matchToRender, 2222222);
-    //         renderPreviewMatch(matchToRender);
-    //       }
-    //     })
-    //   );
-    const seriesMatches = result.typeMatches.map(
-      (match) => match.seriesMatches
-    );
+    // console.log(result);
+    const seriesMatches = result.typeMatches.map(match => match.seriesMatches);
 
-    const series = seriesMatches.map((array) => {
-      console.log(array);
+    const series = seriesMatches.map(array => {
+      // console.log(array);
       return array
-        .map((obj) => {
+        .map(obj => {
           if (!obj.seriesAdWrapper) return null;
           return obj.seriesAdWrapper;
         })
         .filter(Boolean); // this will remove null values
     });
-    console.log(series, "hhhhhhhhh");
+    // console.log(series, "hhhhhhhhh");
 
     const seriesM = series.flat();
+    console.log(seriesM);
 
-    console.log(series.flat());
+    // state.matchArr = series.flat();
 
-    seriesM.forEach((match) =>
-      match.matches.forEach((matchToRender) => {
-        console.log(matchToRender, 111111111);
-        if (matchToRender.hasOwnProperty("matchScore")) {
-          console.log(matchToRender, 333333);
+    // console.log(series.flat());
+
+    seriesM.forEach(match =>
+      match.matches.forEach(matchToRender => {
+        // console.log(matchToRender, 111111111);
+        state.matchArr.push(matchToRender);
+        console.log(state);
+        if (matchToRender.hasOwnProperty('matchScore')) {
+          // console.log(matchToRender, 333333);
           renderScoreCard(matchToRender);
         } else {
-          console.log(matchToRender, 2222222);
+          // console.log(matchToRender, 2222222);
           renderPreviewMatch(matchToRender);
         }
       })
@@ -102,25 +91,26 @@ const getCricket = async function () {
     console.error(error);
   }
 };
-getCricket();
+await getCricket();
 ///////////////////////////////////////////////////////////
 
 const getNews = async function () {
-  const url = "https://cricbuzz-cricket.p.rapidapi.com/news/v1/index";
+  const url = 'https://cricbuzz-cricket.p.rapidapi.com/news/v1/index';
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
-      "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
+      'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
+      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
     },
   };
 
   try {
     const response = await fetch(url, options);
     const result = await response.json();
+    console.log(result);
 
     const newsList = result.storyList.slice(0, 4); // Get the first 3 elements
-    newsList.forEach((news) => {
+    newsList.forEach(news => {
       if (!news.story) return;
 
       renderNews(news);
@@ -130,7 +120,25 @@ const getNews = async function () {
   }
 };
 
-getNews();
+await getNews();
+
+const matches = document.querySelectorAll('.match');
+let matchItm;
+
+console.log(matches);
+
+matches.forEach(match =>
+  match.addEventListener('click', async function (e) {
+    console.log(e.target.closest('.match'));
+    const matchItm = e.target.closest('.match');
+
+    if (!matchItm) return;
+
+    const matchId = matchItm.dataset.id;
+    window.location.href = `match.html#${matchId}`;
+  })
+);
+
 // const requestOptions = {
 //   method: "GET",
 //   headers: {

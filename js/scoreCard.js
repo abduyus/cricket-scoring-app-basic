@@ -1,10 +1,10 @@
-import { cricketCountries } from "./flags.js";
-import { formatDate } from "./formatDate.js";
+import { formatDate } from './formatDate.js';
 
-const matchesCardContainer = document.querySelector(".matches-container");
+const matchesCardContainer = document.querySelector('.matches-container');
 
 const renderScoreCard = function (data) {
   console.log(data);
+  if (!matchesCardContainer) return;
   // let resultT1 = data.Events[0].Tr1CW1
   //   ? "/" + data.Events[0].Tr1CW1
   //   : " &nbsp;&nbsp;";
@@ -34,7 +34,7 @@ const renderScoreCard = function (data) {
   // console.log(t1Flag, t2Flag);
   // console.log(cricketCountries[t1Flag]);
   const html = `
-    <div class="match">
+    <div class="match" data-id="${data.matchInfo.matchId}">
     <p class="match-info">
       <span class="match-live--status">${data.matchInfo.state}</span> &bull;
       <span class="match-date">${data.matchInfo.matchDesc}</span> &bull;
@@ -48,14 +48,14 @@ const renderScoreCard = function (data) {
           <img
             src="http://api.cricbuzz.com/a/img/v1/i1/c${
               data.matchInfo.team1.imageId
-            }/i.jpg?p=thumb&d=high"
+            }/i.jpg?p=gt&d=high"
             class="team-logo"
             alt="&nbsp;"
           />
           <img
           src="http://api.cricbuzz.com/a/img/v1/i1/c${
             data.matchInfo.team2.imageId
-          }/i.jpg?p=thumb&d=high"
+          }/i.jpg?p=gt&d=high"
             class="team-logo"
             alt="&nbsp;"
           />
@@ -72,67 +72,67 @@ const renderScoreCard = function (data) {
           <span class="team1-score">${
             data.matchScore.team1Score.inngs1.runs
               ? data.matchScore.team1Score.inngs1.runs
-              : " "
+              : ' '
           }${
     data.matchScore.team1Score.inngs1.wickets !== undefined
-      ? "/" + data.matchScore.team1Score.inngs1.wickets
+      ? '/' + data.matchScore.team1Score.inngs1.wickets
       : data.matchScore.team1Score.inngs1.runs !== undefined
-      ? "/0"
-      : " "
+      ? '/0'
+      : ' '
   }${
     data.matchScore.team1Score.inngs2?.runs
-      ? " & " + data.matchScore.team1Score.inngs2?.runs
-      : " "
+      ? ' & ' + data.matchScore.team1Score.inngs2?.runs
+      : ' '
   }${
     data.matchScore.team1Score?.inngs2?.wickets !== undefined
-      ? "/" + data.matchScore.team1Score.inngs2.wickets
+      ? '/' + data.matchScore.team1Score.inngs2.wickets
       : data.matchScore.team1Score.inngs2?.runs !== undefined
-      ? "/0"
-      : " "
+      ? '/0'
+      : ' '
   }</span>
           <span class="team-overs team1-overs">${
             data?.matchScore.team1Score.inngs1.overs
               ? data.matchScore.team1Score.inngs1.overs
-              : " "
+              : ' '
           }</span>
         </div>
         <div class="score score--team-2">
         <span class="team2-score">${
           data?.matchScore?.team2Score?.inngs1?.runs
             ? data.matchScore.team2Score.inngs1.runs
-            : " "
+            : ' '
         }${
     data?.matchScore?.team2Score?.inngs1?.wickets !== undefined
-      ? "/" + data.matchScore.team2Score.inngs1.wickets
+      ? '/' + data.matchScore.team2Score.inngs1.wickets
       : data?.matchScore?.team2Score?.inngs1?.runs !== undefined
-      ? "/0"
-      : " "
+      ? '/0'
+      : ' '
   }${
     data?.matchScore?.team2Score?.inngs2?.runs
-      ? " & " + data.matchScore.team2Score.inngs2.runs
-      : " "
+      ? ' & ' + data.matchScore.team2Score.inngs2.runs
+      : ' '
   }${
     data?.matchScore?.team2Score?.inngs2?.wickets !== undefined
-      ? "/" + data.matchScore.team2Score.inngs2.wickets
+      ? '/' + data.matchScore.team2Score.inngs2.wickets
       : data?.matchScore?.team2Score?.inngs2?.runs !== undefined
-      ? "/0"
-      : " "
+      ? '/0'
+      : ' '
   }</span>
           <span class="team-overs team2-overs">${
             data?.matchScore?.team2Score?.inngs1?.overs
               ? data.matchScore.team2Score.inngs1?.overs
-              : " "
+              : ' '
           }</span>
         </div>
       </div>
     </div>
     <span class="match-status"
-      >${data.matchInfo.status || ""}</span
+      >${data.matchInfo.status || ''}</span
     >
   </div>
       `;
 
-  matchesCardContainer.insertAdjacentHTML("beforeend", html);
+  matchesCardContainer.insertAdjacentHTML('beforeend', html);
 };
 
 const renderPreviewMatch = function (data) {
@@ -172,21 +172,21 @@ const renderPreviewMatch = function (data) {
   
       <div class="match-scores">
         <div class="score score--team-1">
-          <span class="team1-score">${""}${""}</span>
-          <span class="team-overs team1-overs">${""}</span>
+          <span class="team1-score">${''}${''}</span>
+          <span class="team-overs team1-overs">${''}</span>
         </div>
         <div class="score score--team-2">
-          <span class="team2-score">${""}${""}</span>
-          <span class="team-overs team2-overs">${""}</span>
+          <span class="team2-score">${''}${''}</span>
+          <span class="team-overs team2-overs">${''}</span>
         </div>
       </div>
     </div>
     <span class="match-status"
-      >${data.matchInfo.status || ""}</span
+      >${data.matchInfo.status || ''}</span
     >
   </div>
       `;
 
-  matchesCardContainer.insertAdjacentHTML("beforeend", html);
+  matchesCardContainer.insertAdjacentHTML('beforeend', html);
 };
 export { renderScoreCard, renderPreviewMatch };

@@ -1,8 +1,8 @@
-const newsContainer = document.querySelector(".news-list");
+const newsContainer = document.querySelector('.news-list');
 
 export const renderNews = async function (data) {
-  const img = `http://api.cricbuzz.com/a/img/v1/i1/c${data.story.coverImage.id}/i.jpg?p=thumb&d=high`;
-  console.log(img, "hello");
+  const img = `http://api.cricbuzz.com/a/img/v1/i1/c${data.story.coverImage.id}/i.jpg?p=gt&d=high`;
+  console.log(img, 'hello');
 
   let headline = data.story.hline;
   if (!/^[A-Za-z]/.test(headline)) {
@@ -49,5 +49,5 @@ export const renderNews = async function (data) {
                 </div>
               </li>
             </a>`;
-  newsContainer.insertAdjacentHTML("afterbegin", markup);
+  newsContainer.insertAdjacentHTML('afterbegin', markup);
 };
