@@ -43,6 +43,7 @@ const getCricket = async function () {
     method: 'GET',
     headers: {
       'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
+      // 'X-RapidAPI-Key': '882d15899amsh2467631ba6e7cb6p12ca8ajsn0647d2efeab2',
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
     },
   };
@@ -120,7 +121,7 @@ const getNews = async function () {
   }
 };
 
-await getNews();
+// await getNews();
 
 const matches = document.querySelectorAll('.match');
 let matchItm;

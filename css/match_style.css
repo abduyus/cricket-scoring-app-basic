@@ -535,6 +535,25 @@ tbody tr:nth-child(even) {
   margin-bottom: 5.4rem;
 }
 
+.table--score:nth-of-type(even) thead {
+  background-color: #da77f2;
+}
+
+.table--score:nth-of-type(even) .live--bat-name {
+  color: #da77f2;
+}
+
+.live--bat-desc {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #000;
+  margin-top: 1.2rem;
+}
+
+.live--bat-runs {
+  /* font-weight: 700; */
+}
+
 /* .over-heading {
   color: var(--main-color);
 }

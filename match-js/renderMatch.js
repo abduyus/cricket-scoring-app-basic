@@ -9,6 +9,8 @@ class RenderMatch {
   _scoreCard = document.querySelector('.scoreboard');
   _team1;
   _team2;
+  _team1Name;
+  _team2Name;
   _team1Score;
   _team2Score;
   _batScoreBoard;
@@ -64,6 +66,10 @@ class RenderMatch {
 
     this._team1 = imageObj[0].matchInfo.team1.imageId;
     this._team2 = imageObj[0].matchInfo.team2.imageId;
+
+    this._team1Name = imageObj[0].matchInfo.team1.teamName;
+    this._team2Name = imageObj[0].matchInfo.team2.teamName;
+    console.log(this._team1Name, 'skjhsdhfkjsfhksdkfh');
   }
 
   _generateMarkup() {
@@ -95,7 +101,9 @@ class RenderMatch {
               <div class="matches--team1--score">
                 <img
                   src="http://api.cricbuzz.com/a/img/v1/i1/c${
-                    this._team1
+                    this._team1Name === this._data.matchHeader.team1.name
+                      ? this._team1
+                      : this._team2
                   }/i.jpg?p=gt&d=high"
                   alt="Flag of ${this._data.matchHeader.team1.name}"
                   class="matches--team1-img"
@@ -118,7 +126,9 @@ class RenderMatch {
               <div class="matches--team2--score">
                 <img
                   src="http://api.cricbuzz.com/a/img/v1/i1/c${
-                    this._team2
+                    this._team2Name === this._data.matchHeader.team2.name
+                      ? this._team2
+                      : this._team1
                   }/i.jpg?p=gt&d=high"
                   alt="Flag of ${this._data.matchHeader.team2.name}"
                   class="matches--team2-img"
@@ -348,45 +358,9 @@ class RenderMatch {
               </div>
             </div>
             <div class="operations__content operations__content--3">
-              <h5 class="operations__header">${
-                this._batScoreBoardT1.batTeamName
-              }'s 1st innings</h5>
-              <table class="container table--score">
-                <thead>
-                  <tr>
-                    <th>Batsmen</th>
-                    <th>Runs</th>
-                    <th>Balls</th>
-                    <th>4s</th>
-                    <th>6s</th>
-                    <th>How out</th>
-                    <th>SR</th>
-                  </tr>
-                </thead>
-                <tbody>
-                ${this._renderBatScoreBoard()}
-                  
-                  
-                </tbody>
-              </table>
-              <table class="container table--score">
-                <thead>
-                  <tr>
-                    <th>Batsmen</th>
-                    <th>Runs</th>
-                    <th>Balls</th>
-                    <th>4s</th>
-                    <th>6s</th>
-                    <th>How out</th>
-                    <th>SR</th>
-                  </tr>
-                </thead>
-                <tbody>
-                ${this._renderBatScoreBoard()}
-                  
-                  
-                </tbody>
-              </table>
+              
+              ${this._renderBatScoreBoard()}
+              
               <!--<div class="flex gap--sm align-center mar-top-md">
                 <p class="yet-to-bat">Yet to Bat:</p>
                 <p class="yet-to-batsmen">
@@ -450,40 +424,49 @@ class RenderMatch {
 
   _renderBatScoreBoard() {
     let markup = '';
-
-    for (let batsman in this._batScoreBoardT1.batsmenData) {
-      markup += `
+    this._batScoreBoard.forEach(inng => {
+      const rows = Object.values(inng.batsmenData)
+        .map(
+          batsman => `
         <tr>
-          <td class="live--bat-name">${
-            this._batScoreBoardT1.batsmenData[batsman].batName
-          }</td>
-          <td class="live--bat-score">${
-            this._batScoreBoardT1.batsmenData[batsman].runs
-          }</td>
-          <td class="live--bat-score">${
-            this._batScoreBoardT1.batsmenData[batsman].balls
-          }</td>
-          <td class="live--bat-score">${
-            this._batScoreBoardT1.batsmenData[batsman].fours
-          }</td>
-          <td class="live--bat-score">${
-            this._batScoreBoardT1.batsmenData[batsman].sixes
-          }</td>
-          <td class="live--bat-score">${
-            this._batScoreBoardT1.batsmenData[batsman].outDesc || 'Did not Bat'
-          }</td>
-          <td class="live--bat-score">${
-            this._batScoreBoardT1.batsmenData[batsman].strikeRate
-          }</td>
+          <td class="live--bat-name">${batsman.batName}</td>
+          <td class="live--bat-runs">${batsman.runs}</td>
+          <td class="live--bat-score">${batsman.balls}</td>
+          <td class="live--bat-score">${batsman.fours}</td>
+          <td class="live--bat-score">${batsman.sixes}</td>
+          <td class="live--bat-desc">${batsman.outDesc || 'Did not Bat'}</td>
+          <td class="live--bat-score">${batsman.strikeRate.toFixed(2)}</td>
         </tr>
-        `;
-      // console.log(inng.batsmenData[batsman]);
-      console.log(this._scoreCard);
-      // this._scoreCard.insertAdjacentHTML('afterbegin', markup);
-    }
+      `
+        )
+        .join('');
+
+      const html = `
+      <h5 class="operations__header">${inng.batTeamName}'s innings</h5>
+      <table class="container table--score">
+      <thead>
+        <tr>
+          <th>Batsmen</th>
+          <th>Runs</th>
+          <th>Balls</th>
+          <th>4s</th>
+          <th>6s</th>
+          <th>How out</th>
+          <th>SR</th>
+        </tr>
+      </thead>
+      <tbody>
+      ${rows}
+        
+        
+      </tbody>
+    </table>
+      `;
+
+      markup += html;
+    });
 
     return markup;
-    console.log(this._batScoreBoardT1);
   }
 }
 

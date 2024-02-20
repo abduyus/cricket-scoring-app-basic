@@ -1,4 +1,29 @@
-// import renderMatch from './renderMatch.js';
+import renderMatch from './renderMatch.js';
+
+const getMatchData = async function () {
+  const id = window.location.hash.slice(1);
+  console.log(id);
+  const url = `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${id}/scard`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
+      // 'X-RapidAPI-Key': '882d15899amsh2467631ba6e7cb6p12ca8ajsn0647d2efeab2',
+      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    renderMatch._render(result);
+    console.log(result);
+  } catch (error) {
+    console.error(error, '⚠️⚠️⚠️');
+  }
+};
+
+await getMatchData();
 
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
@@ -20,27 +45,3 @@ tabsContainer.addEventListener('click', function (e) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
-
-// const getMatchData = async function () {
-//   const id = window.location.hash.slice(1);
-//   console.log(id);
-//   const url = `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${id}/scard`;
-//   const options = {
-//     method: 'GET',
-//     headers: {
-//       'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
-//       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
-//     },
-//   };
-
-//   try {
-//     const response = await fetch(url, options);
-//     const result = await response.json();
-//     renderMatch._render(result);
-//     console.log(result);
-//   } catch (error) {
-//     console.error(error, '⚠️⚠️⚠️');
-//   }
-// };
-
-// await getMatchData();
