@@ -550,10 +550,6 @@ tbody tr:nth-child(even) {
   margin-top: 1.2rem;
 }
 
-.live--bat-runs {
-  /* font-weight: 700; */
-}
-
 /* .over-heading {
   color: var(--main-color);
 }

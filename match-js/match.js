@@ -1,5 +1,12 @@
 import renderMatch from './renderMatch.js';
 
+const getJSON = function (url, options, errorMsg = 'Something went wrong') {
+  return fetch(url, options).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+    return response.json();
+  });
+};
+
 const getMatchData = async function () {
   const id = window.location.hash.slice(1);
   console.log(id);
@@ -7,16 +14,32 @@ const getMatchData = async function () {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
+      // 'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
       // 'X-RapidAPI-Key': '882d15899amsh2467631ba6e7cb6p12ca8ajsn0647d2efeab2',
+      'X-RapidAPI-Key': 'aff1df6c51mshdaba1429286e586p192fb1jsncaf64292633d',
+      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
+    },
+  };
+
+  const urlComm = `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${id}/comm`;
+  const optionsComm = {
+    method: 'GET',
+    headers: {
+      // 'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
+      // 'X-RapidAPI-Key': '882d15899amsh2467631ba6e7cb6p12ca8ajsn0647d2efeab2',
+      'X-RapidAPI-Key': 'aff1df6c51mshdaba1429286e586p192fb1jsncaf64292633d',
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
     },
   };
 
   try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    renderMatch._render(result);
+    const response = await Promise.all([
+      getJSON(url, options),
+      getJSON(urlComm, optionsComm),
+    ]);
+    console.log(response);
+    // const result = await response.json();
+    renderMatch._render(response);
     console.log(result);
   } catch (error) {
     console.error(error, '⚠️⚠️⚠️');

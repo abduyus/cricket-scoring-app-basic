@@ -5,6 +5,7 @@ console.log(state.matchArr); // Will log ['some value']
 
 class RenderMatch {
   _data;
+  _commentary;
   _parentElement = document.querySelector('.section-result');
   _scoreCard = document.querySelector('.scoreboard');
   _team1;
@@ -23,7 +24,8 @@ class RenderMatch {
   }
 
   _render(data) {
-    this._data = data;
+    this._data = data[0];
+    this._commentary = data[1];
     this._team1Score = this._data.scoreCard.filter(
       inngs =>
         inngs.batTeamDetails.batTeamName === this._data.matchHeader.team1.name
@@ -40,7 +42,6 @@ class RenderMatch {
     this._bowlScoreBoard = this._data.scoreCard.map(
       inngs => inngs.bowlTeamDetails
     );
-    console.log(this._batScoreBoard);
 
     const markup = this._generateMarkup();
     this._clear();
@@ -57,6 +58,8 @@ class RenderMatch {
       item => item.matchInfo.matchId === +window.location.hash.slice(1)
     );
 
+    console.log(window.location.hash.slice(1), 3290393299999);
+
     if (Array.isArray(imageObj) && imageObj.length > 0) {
       // Access the property 'matchInfo' of the first element in 'imageObj'
       console.log(imageObj[0].matchInfo);
@@ -69,7 +72,7 @@ class RenderMatch {
 
     this._team1Name = imageObj[0].matchInfo.team1.teamName;
     this._team2Name = imageObj[0].matchInfo.team2.teamName;
-    console.log(this._team1Name, 'skjhsdhfkjsfhksdkfh');
+    // console.log(this._team1Name, 'skjhsdhfkjsfhksdkfh');
   }
 
   _generateMarkup() {
@@ -254,49 +257,10 @@ class RenderMatch {
 
             <div class="operations__content operations__content--2">
               <div class="commentary">
-                <div class="commentary-item">
-                  <div class="commentary-item--balls">
-                    <span class="commentary-item--overs">39.3</span>
-                    <span
-                      class="commentary-item--runs matches--6 matches--wicket"
-                    >
-                      W</span
-                    >
-                  </div>
-                  <div class="commentary-item--info commentary--wicket">
-                    Naseem Shah to Pat Cummins: Wicket! Bowled 'em! Absolutely
-                    sensational bowling. A rapid yorker from Naseem that send
-                    the stumps flying!
-                  </div>
-                </div>
+                
+                ${this._renderCommentary()}
 
-                <div class="commentary-item">
-                  <div class="commentary-item--balls">
-                    <span class="commentary-item--overs">39.2</span>
-                    <span class="commentary-item--runs matches--6 matches--dot">
-                      0</span
-                    >
-                  </div>
-                  <div class="commentary-item--info commentary--dot">
-                    Naseem Shah to Pat Cummins: Dot! A fuller ball on off just
-                    beating the edge.
-                  </div>
-                </div>
-
-                <!-- Commentary item -->
-                <div class="commentary-item">
-                  <div class="commentary-item--balls">
-                    <span class="commentary-item--overs">39.1</span>
-                    <span class="commentary-item--runs matches--6 matches--dot">
-                      0</span
-                    >
-                  </div>
-                  <div class="commentary-item--info commentary--dot">
-                    Naseem Shah to Pat Cummins: Dot! A short ball by Naseem that
-                    was pulled away but straight to Saim Ayub at square leg.
-                  </div>
-                </div>
-                <!-- ///////////////////////////////////////////// -->
+                
 
                 <!-- End of over item -->
                 <div class="commentary-item--over">
@@ -346,6 +310,7 @@ class RenderMatch {
                     <span
                       class="commentary-item--runs matches--6 matches--byes"
                     >
+                    
                       6b</span
                     >
                   </div>
@@ -359,7 +324,7 @@ class RenderMatch {
             </div>
             <div class="operations__content operations__content--3">
               
-              ${this._renderBatScoreBoard()}
+              ${this.renderScoreBoard()}
               
               <!--<div class="flex gap--sm align-center mar-top-md">
                 <p class="yet-to-bat">Yet to Bat:</p>
@@ -422,6 +387,88 @@ class RenderMatch {
         </div>`;
   }
 
+  _renderCommentary() {
+    let markup = this._commentary.commentaryList.map(function (comm) {
+      console.log(comm.overSeparator);
+      let text;
+      let html;
+      if (comm.commText === 'B0$') return;
+      text = comm.commText;
+      if (text.includes('B0$')) {
+        text = text.replace(
+          /B0\$/g,
+          comm.commentaryFormats.bold.formatValue[0]
+        );
+      }
+      if (text.includes('B1$')) {
+        text = text.replace(
+          /B1\$/g,
+          comm.commentaryFormats.bold.formatValue[1]
+        );
+      }
+      if (!comm.overNumber) {
+        html = `
+        <div class="commentary-item">
+        ${text}
+        </div>
+        `;
+      } else {
+        let ballType;
+        text.includes('out') ? (ballType = 'wicket') : '';
+        text.includes('no run,') || text.includes('no run')
+          ? (ballType = 'dot')
+          : '';
+        text.includes('1 run,') || text.includes('1 run')
+          ? (ballType = 'single')
+          : '';
+        text.includes('2 runs,') || text.includes('2 runs')
+          ? (ballType = 'double')
+          : '';
+        text.includes('SIX,') || text.includes('SIX') ? (ballType = 'six') : '';
+        text.includes('FOUR,') || text.includes('FOUR')
+          ? (ballType = 'four')
+          : '';
+        text.includes('wide,') || text.includes('wide')
+          ? (ballType = 'wide')
+          : '';
+        text.includes('leg byes, 1 run,') ? (ballType = 'byes') : '';
+        text.includes('Run Out!!') ? (ballType = 'wicket') : '';
+
+        let runs;
+        ballType === 'wicket' ? (runs = 'W') : '';
+        ballType === 'dot' ? (runs = '0') : '';
+        ballType === 'single' ? (runs = '1') : '';
+        ballType === 'double' ? (runs = '2') : '';
+        ballType === 'six' ? (runs = '6') : '';
+        ballType === 'four' ? (runs = '4') : '';
+        ballType === 'wide' ? (runs = 'WD') : '';
+        // ballType === 'wide' ? (runs = 'WD') : '';
+
+        html = `
+        <div class="commentary-item">
+        <div class="commentary-item--balls">
+        <span class="commentary-item--overs">${comm?.overNumber}</span>
+        <span
+        class="commentary-item--runs matches--6 matches--${ballType}"
+        >
+        
+        ${runs}</span
+        >
+        </div>
+        <div class="commentary-item--info commentary--${ballType}">
+        ${text}
+        </div>
+        </div>`;
+      }
+      return html;
+    });
+
+    markup = markup.filter(item => item !== undefined).join('');
+
+    // console.log(markup, 39949049039093);
+    return markup;
+  }
+
   _renderBatScoreBoard() {
     let markup = '';
     this._batScoreBoard.forEach(inng => {
@@ -434,12 +481,13 @@ class RenderMatch {
           <td class="live--bat-score">${batsman.balls}</td>
           <td class="live--bat-score">${batsman.fours}</td>
           <td class="live--bat-score">${batsman.sixes}</td>
-          <td class="live--bat-desc">${batsman.outDesc || 'Did not Bat'}</td>
+          <td class="live--bat-desc">${batsman.outDesc || ' '}</td>
           <td class="live--bat-score">${batsman.strikeRate.toFixed(2)}</td>
         </tr>
       `
         )
         .join('');
+      // console.log(rows);
 
       const html = `
       <h5 class="operations__header">${inng.batTeamName}'s innings</h5>
@@ -465,7 +513,66 @@ class RenderMatch {
 
       markup += html;
     });
+    console.log(this._bowlScoreBoard, '3839202-302-3-');
+    return markup;
+  }
+  _renderBowlScoreBoard() {
+    let markup = '';
+    this._bowlScoreBoard.forEach(inng => {
+      console.log(inng);
+      const rows = Object.values(inng.bowlersData)
+        .map(
+          bowler => `
+        <tr>
+          <td class="live--bat-name">${bowler.bowlName}</td>
+          <td class="live--bat-runs">${bowler.overs}</td>
+          <td class="live--bat-score">${bowler.runs}</td>
+          <td class="live--bat-score">${bowler.wickets}</td>
+          <td class="live--bat-desc">${bowler.economy}</td>
+        </tr>
+      `
+        )
+        .join('');
 
+      const html = `
+      <h5 class="operations__header">${inng.bowlTeamName}'s </h5>
+      <table class="container table--score">
+      <thead>
+        <tr>
+          <th>Bowler</th>
+          <th>Over</th>
+          <th>Runs</th>
+          <th>Wickets</th>
+          <th>Economy</th>
+        </tr>
+      </thead>
+      <tbody>
+      ${rows}
+        
+        
+      </tbody>
+    </table>
+      `;
+
+      markup += html;
+    });
+    console.log(this._bowlScoreBoard, '3839202-302-3-');
+    return markup;
+  }
+
+  renderScoreBoard() {
+    const batScoreBoard = this._renderBatScoreBoard();
+    const bowlScoreBoard = this._renderBowlScoreBoard();
+
+    const markup = `
+      <div class="score-board">
+        ${batScoreBoard}
+        ${bowlScoreBoard}
+      </div>
+    `;
+
+    // Insert the markup into the DOM
+    // Assuming you have a container for the score board
     return markup;
   }
 }
