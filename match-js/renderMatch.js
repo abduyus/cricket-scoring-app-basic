@@ -1,5 +1,5 @@
 // renderMatch.js
-import { state } from '../js/script.js';
+import state from '../js/script.js';
 
 console.log(state.matchArr); // Will log ['some value']
 
@@ -122,9 +122,16 @@ class RenderMatch {
                     )
                     .join(' & ')}
                 </p>
-                <p class="matches--team1-overs">${this._team1Score
-                  .map(inngs => inngs.scoreDetails.overs)
-                  .join(' & ')} ov</p>
+                <p class="matches--team1-overs">${
+                  this._team1Score.map(
+                    inngs =>
+                      `${inngs.scoreDetails.runs}/${inngs.scoreDetails.wickets}`
+                  )
+                    ? `${this._team1Score.map(
+                        inngs => inngs.scoreDetails.overs + ' ov'
+                      )}`
+                    : ''
+                } </p>
               </div>
               <div class="matches--team2--score">
                 <img
@@ -145,9 +152,16 @@ class RenderMatch {
                       `${inngs.scoreDetails.runs}/${inngs.scoreDetails.wickets}`
                   )
                   .join(' & ')}</p>
-                <p class="matches--team2-overs">${this._team1Score
-                  .map(inngs => inngs.scoreDetails.overs)
-                  .join(' & ')} ov</p>
+                <p class="matches--team2-overs">${
+                  this._team2Score.map(
+                    inngs =>
+                      `${inngs.scoreDetails.runs}/${inngs.scoreDetails.wickets}`
+                  )
+                    ? `${this._team2Score.map(
+                        inngs => inngs.scoreDetails.overs + ' ov'
+                      )}`
+                    : ''
+                }</p>
               </div>
               <span class="matches--last-6balls">
                 <span class="matches--6 matches--wicket">W</span>
@@ -158,13 +172,20 @@ class RenderMatch {
                 <span class="matches--6 matches--wide">WD</span>
               </span>
             </div>
-            <p class="match--detail" ${
-              this._data.matchHeader.playersOfTheMatch.length !== 0
+            <p class="match--detail ${
+              !this._data.matchHeader.playersOfTheMatch.length == 0
                 ? 'hidden'
                 : ''
-            }>Player of the Match: ${this._data.matchHeader.playersOfTheMatch
-      .map(player => player.fullName)
-      .join(' & ')}</p>
+            }"> ${
+      this._data.matchHeader.playersOfTheMatch
+        .map(player => player.fullName)
+        .join(' & ')
+        ? 'Player of the Match: ' +
+          this._data.matchHeader.playersOfTheMatch
+            .map(player => player.fullName)
+            .join(' & ')
+        : ''
+    }</p>
             
           </div>
 
@@ -204,18 +225,51 @@ class RenderMatch {
                         <th>Balls</th>
                         <th>4s</th>
                         <th>6s</th>
-                        <th>6s</th>
+                        <th>SR</th>
                       </tr>
                     </thead>
                     <tbody>
                      
                       <tr>
-                        <td class="live--bat-name">Mohammad Rizwan</td>
-                        <td class="live--bat-score">129*</td>
-                        <td class="live--bat-score">45</td>
-                        <td class="live--bat-score">20</td>
-                        <td class="live--bat-score">4</td>
-                        <td class="live--bat-score">286.67</td>
+                        <td class="live--bat-name">${
+                          this._commentary.miniscore.batsmanStriker.batName
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanStriker.batRuns
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanStriker.batBalls
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanStriker.batFours
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanStriker.batSixes
+                        }</td>
+                        <td class="live--bat-score">${this._commentary.miniscore.batsmanStriker.batStrikeRate.toFixed(
+                          2
+                        )}</td>
+                      </tr>
+                      <tr>
+                        <td class="live--bat-name">${
+                          this._commentary.miniscore.batsmanNonStriker.batName
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanNonStriker.batRuns
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanNonStriker.batBalls
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanNonStriker.batFours
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanNonStriker.batSixes
+                        }</td>
+                        <td class="live--bat-score">${
+                          this._commentary.miniscore.batsmanNonStriker
+                            .batStrikeRate
+                        }</td>
                       </tr>
                     </tbody>
                   </table>
@@ -234,20 +288,45 @@ class RenderMatch {
                     </thead>
                     <tbody>
                       <tr>
-                        <td class="live--bowler-name">Pat Cummins</td>
-                        <td class="live--bowler-runs">275*</td>
-                        <td class="live--bowler-wickets">125</td>
-                        <td class="live--bowler-overs">35</td>
-                        <td class="live--bowler-maidens">3</td>
-                        <td class="live--bowler-economy">180</td>
+                        <td class="live--bowler-name">${
+                          this._commentary.miniscore.bowlerStriker.bowlName
+                        }</td>
+                        <td class="live--bowler-runs">${
+                          this._commentary.miniscore.bowlerStriker.bowlRuns
+                        }</td>
+                        <td class="live--bowler-wickets">${
+                          this._commentary.miniscore.bowlerStriker.bowlWkts
+                        }</td>
+                        <td class="live--bowler-overs">${
+                          this._commentary.miniscore.bowlerStriker.bowlOvs
+                        }</td>
+                        <td class="live--bowler-maidens">${
+                          this._commentary.miniscore.bowlerStriker.bowlMaidens
+                        }</td>
+                        <td class="live--bowler-economy">${
+                          this._commentary.miniscore.bowlerStriker.bowlEcon
+                        }</td>
                       </tr>
                       <tr>
-                        <td class="live--bowler-name">Mitchell Starc</td>
-                        <td class="live--bowler-runs">275*</td>
-                        <td class="live--bowler-wickets">125</td>
-                        <td class="live--bowler-overs">35</td>
-                        <td class="live--bowler-maidens">3</td>
-                        <td class="live--bowler-economy">180</td>
+                        <td class="live--bowler-name">${
+                          this._commentary.miniscore.bowlerNonStriker.bowlName
+                        }</td>
+                        <td class="live--bowler-runs">${
+                          this._commentary.miniscore.bowlerNonStriker.bowlRuns
+                        }</td>
+                        <td class="live--bowler-wickets">${
+                          this._commentary.miniscore.bowlerNonStriker.bowlWkts
+                        }</td>
+                        <td class="live--bowler-overs">${
+                          this._commentary.miniscore.bowlerNonStriker.bowlOvs
+                        }</td>
+                        <td class="live--bowler-maidens">${
+                          this._commentary.miniscore.bowlerNonStriker
+                            .bowlMaidens
+                        }</td>
+                        <td class="live--bowler-economy">${
+                          this._commentary.miniscore.bowlerNonStriker.bowlEcon
+                        }</td>
                       </tr>
                     </tbody>
                   </table>
@@ -389,10 +468,75 @@ class RenderMatch {
 
   _renderCommentary() {
     let markup = this._commentary.commentaryList.map(function (comm) {
-      console.log(comm.overSeparator);
-      let text;
+      const overSep = function () {
+        if (!comm.overSeparator) return;
+        return `
+        <div class="commentary-item--over">
+                  <div class="over--heading-item">
+                    <p class="over over-heading">
+                      <span class="over--sm">End of over</span> <span>${
+                        comm.overSeparator.overNum + 0.4
+                      }</span>
+                    </p>
+
+                    <p class="over bat-over">
+                      <span class="over--sm">Runs Scored: ${
+                        comm.overSeparator.runs
+                      }</span>
+                      <span>
+                        <span class="commentary--dot">0</span>
+                        <span class="commentary--dot">0</span>
+                        <span class="commentary--dot">0</span>
+                        <span class="commentary--four">4</span>
+                        <span class="commentary--wide">WD</span>
+                        <span class="commentary--dot">0</span>
+                      </span>
+                    </p>
+
+                    <p class="over bat-over-score">
+                      <span class="over--sm"
+                        >${comm.overSeparator.batTeamName} Score After ${
+          comm.overSeparator.overNum + 0.4
+        } Overs:</span
+                      >
+                      <span>${comm.overSeparator.score}/${
+          comm.overSeparator.wickets
+        } (38ov)</span>
+                    </p>
+                    <p class="over batsmen--score">
+                      <span class="over--sm">${
+                        comm.overSeparator.batStrikerNames[0]
+                      }: ${comm.overSeparator.batStrikerRuns}*</span>
+                      <span>${comm.overSeparator.batNonStrikerNames[0]}: ${
+          comm.overSeparator.batNonStrikerRuns
+        }</span>
+                    </p>
+
+                    <p class="over bowler--score">
+                      <span class="over--sm">${
+                        comm.overSeparator.bowlNames[0]
+                      }</span>
+                      <span>${comm.overSeparator.bowlOvers}-${
+          comm.overSeparator.bowlMaidens
+        }-${comm.overSeparator.bowlRuns}-${
+          comm.overSeparator.bowlWickets
+        }</span>
+                    </p>
+                    <p class="over batsmen--crr">
+                      <span class="over--sm">Current Run Rate</span>
+                      <span>${(
+                        comm.overSeparator.runs /
+                        (comm.overSeparator.overNum + 0.4)
+                      ).toFixed(2)}</span>
+                    </p>
+                  </div>
+                </div>
+        `;
+      };
       let html;
-      if (comm.commText === 'B0$') return;
+      let text;
+
+      // if (comm.commText === 'B0$') return;
       text = comm.commText;
       if (text.includes('B0$')) {
         text = text.replace(
@@ -406,6 +550,12 @@ class RenderMatch {
           comm.commentaryFormats.bold.formatValue[1]
         );
       }
+      if (text.includes('B2$')) {
+        text = text.replace(
+          /B2\$/g,
+          comm.commentaryFormats.bold.formatValue[2]
+        );
+      }
       if (!comm.overNumber) {
         html = `
         <div class="commentary-item">
@@ -415,22 +565,26 @@ class RenderMatch {
       } else {
         let ballType;
         text.includes('out') ? (ballType = 'wicket') : '';
-        text.includes('no run,') || text.includes('no run')
+        text.includes(', no run,') || text.includes('no run')
           ? (ballType = 'dot')
           : '';
-        text.includes('1 run,') || text.includes('1 run')
+        text.includes(', 1 run,') || text.includes('1 run')
           ? (ballType = 'single')
           : '';
-        text.includes('2 runs,') || text.includes('2 runs')
+        text.includes(', 2 runs,') || text.includes('2 runs')
           ? (ballType = 'double')
           : '';
-        text.includes('SIX,') || text.includes('SIX') ? (ballType = 'six') : '';
-        text.includes('FOUR,') || text.includes('FOUR')
+        text.includes(', 3 runs,') || text.includes('3 runs')
+          ? (ballType = 'triple')
+          : '';
+        text.includes(', SIX,') || text.includes('SIX')
+          ? (ballType = 'six')
+          : '';
+        text.includes(', FOUR,') || text.includes('FOUR')
           ? (ballType = 'four')
           : '';
-        text.includes('wide,') || text.includes('wide')
-          ? (ballType = 'wide')
-          : '';
+        text.includes(', wide,') ? (ballType = 'wide') : '';
+        text.includes(', no ball,') ? (ballType = 'no-ball') : '';
         text.includes('leg byes, 1 run,') ? (ballType = 'byes') : '';
         text.includes('Run Out!!') ? (ballType = 'wicket') : '';
 
@@ -442,9 +596,12 @@ class RenderMatch {
         ballType === 'six' ? (runs = '6') : '';
         ballType === 'four' ? (runs = '4') : '';
         ballType === 'wide' ? (runs = 'WD') : '';
+        ballType === 'triple' ? (runs = '3') : '';
+        ballType === 'no-ball' ? (runs = 'NB') : '';
         // ballType === 'wide' ? (runs = 'WD') : '';
 
         html = `
+        ${overSep() || ''}
         <div class="commentary-item">
         <div class="commentary-item--balls">
         <span class="commentary-item--overs">${comm?.overNumber}</span>
@@ -535,7 +692,7 @@ class RenderMatch {
         .join('');
 
       const html = `
-      <h5 class="operations__header">${inng.bowlTeamName}'s </h5>
+      <h5 class="operations__header">${inng.bowlTeamName}'s Bowling</h5>
       <table class="container table--score">
       <thead>
         <tr>
