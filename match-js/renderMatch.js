@@ -45,7 +45,7 @@ class RenderMatch {
 
     const markup = this._generateMarkup();
     this._clear();
-    document.title = 'Your Desired Title';
+    document.title = `${this._data.matchHeader.team1.name} vs ${this._data.matchHeader.team2.name}`;
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
@@ -116,7 +116,7 @@ class RenderMatch {
       char === 'NB3' ? (ballType = 'no-ball') : '';
       char === 'NB4' ? (ballType = 'no-ball') : '';
       char === 'NB5' ? (ballType = 'no-ball') : '';
-      char === 'NB55' ? (ballType = 'no-ball') : '';
+      char === 'NB5' ? (ballType = 'no-ball') : '';
       char === '4' ? (ballType = 'four') : '';
       char === '6' ? (ballType = 'six') : '';
       char === '0' ? (ballType = 'dot') : '';
@@ -469,7 +469,7 @@ class RenderMatch {
             char === 'W' ? (ballType = 'wicket') : '';
             char === '1' ? (ballType = 'single') : '';
             char === '2' ? (ballType = 'double') : '';
-            char === 'L1' ? (ballType = 'byes') : '';
+            char === 'LB' ? (ballType = 'leg-byes') : '';
             char === 'B1' ? (ballType = 'byes') : '';
             char === '3' ? (ballType = 'triple') : '';
             char === 'WD' ? (ballType = 'wide') : '';
@@ -599,7 +599,7 @@ class RenderMatch {
           : '';
 
         text.includes(', no ball,') ? (ballType = 'no-ball') : '';
-        text.includes('leg byes, 1 run,') ? (ballType = 'byes') : '';
+        text.includes('leg byes, 1 run,') ? (ballType = 'leg-byes') : '';
         text.includes('Run Out!!') ? (ballType = 'wicket') : '';
         text.includes(', no run,') || text.includes('no run')
           ? (ballType = 'dot')
@@ -615,6 +615,8 @@ class RenderMatch {
         ballType === 'wide' ? (runs = 'WD') : '';
         ballType === 'triple' ? (runs = '3') : '';
         ballType === 'no-ball' ? (runs = 'NB') : '';
+        ballType === 'byes' ? (runs = 'B') : '';
+        ballType === 'leg-byes' ? (runs = 'LB') : '';
         // ballType === 'wide' ? (runs = 'WD') : '';
 
         html = `

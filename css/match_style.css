@@ -235,6 +235,11 @@ html {
   color: #fff !important;
 }
 
+.matches--leg-byes {
+  background-color: #66d9e8;
+  color: #fff !important;
+}
+
 .matches--single {
   background-color: #bebebe;
   color: #fff !important;
@@ -448,6 +453,11 @@ tbody tr:nth-child(even) {
 }
 
 .commentary--byes {
+  color: #089bae;
+  /* color: #fff !important; */
+}
+
+.commentary--leg-byes {
   color: #089bae;
   /* color: #fff !important; */
 }
