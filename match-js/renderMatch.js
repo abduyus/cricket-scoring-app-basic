@@ -45,7 +45,19 @@ class RenderMatch {
 
     const markup = this._generateMarkup();
     this._clear();
+    document.title = 'Your Desired Title';
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
 
+  renderSpinner() {
+    const markup = `
+    <div class="spinner">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M11 2v4c0 0.552 0.448 1 1 1s1-0.448 1-1v-4c0-0.552-0.448-1-1-1s-1 0.448-1 1zM11 18v4c0 0.552 0.448 1 1 1s1-0.448 1-1v-4c0-0.552-0.448-1-1-1s-1 0.448-1 1zM4.223 5.637l2.83 2.83c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-2.83-2.83c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414zM15.533 16.947l2.83 2.83c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-2.83-2.83c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414zM2 13h4c0.552 0 1-0.448 1-1s-0.448-1-1-1h-4c-0.552 0-1 0.448-1 1s0.448 1 1 1zM18 13h4c0.552 0 1-0.448 1-1s-0.448-1-1-1h-4c-0.552 0-1 0.448-1 1s0.448 1 1 1zM5.637 19.777l2.83-2.83c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-2.83 2.83c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0zM16.947 8.467l2.83-2.83c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-2.83 2.83c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0z"></path>
+    </svg>
+  </div>
+            `;
+    this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
@@ -73,6 +85,47 @@ class RenderMatch {
     this._team1Name = imageObj[0].matchInfo.team1.teamName;
     this._team2Name = imageObj[0].matchInfo.team2.teamName;
     // console.log(this._team1Name, 'skjhsdhfkjsfhksdkfh');
+  }
+
+  _overSum(balls) {
+    let ballType;
+    let result = '';
+
+    let values = balls.split(' '); // Split the string into an array of 1- or 2-character values
+    values.reverse();
+    console.log(values);
+    values.forEach(char => {
+      if (char === '...') return;
+      if (!char) return;
+
+      char === 'W' ? (ballType = 'wicket') : '';
+      char === 'W1' ? (ballType = 'wicket') : '';
+      char === 'W2' ? (ballType = 'wicket') : '';
+      char === 'W3' ? (ballType = 'wicket') : '';
+      char === '1' ? (ballType = 'single') : '';
+      char === '2' ? (ballType = 'double') : '';
+      char === 'L1' ? (ballType = 'byes') : '';
+      char === 'B1' ? (ballType = 'byes') : '';
+      char === '3' ? (ballType = 'triple') : '';
+      char === 'Wd' ? (ballType = 'wide') : '';
+      char === 'Wd2' ? (ballType = 'wide') : '';
+      char === 'Wd3' ? (ballType = 'wide') : '';
+      char === 'Wd5' ? (ballType = 'wide') : '';
+      char === 'NB' ? (ballType = 'no-ball') : '';
+      char === 'NB2' ? (ballType = 'no-ball') : '';
+      char === 'NB3' ? (ballType = 'no-ball') : '';
+      char === 'NB4' ? (ballType = 'no-ball') : '';
+      char === 'NB5' ? (ballType = 'no-ball') : '';
+      char === 'NB55' ? (ballType = 'no-ball') : '';
+      char === '4' ? (ballType = 'four') : '';
+      char === '6' ? (ballType = 'six') : '';
+      char === '0' ? (ballType = 'dot') : '';
+      char === '|' ? (ballType = 'slash') : '';
+
+      result += `<span class="matches--6 matches--${ballType}">${char}</span>`;
+    });
+
+    return result;
   }
 
   _generateMarkup() {
@@ -164,12 +217,7 @@ class RenderMatch {
                 }</p>
               </div>
               <span class="matches--last-6balls">
-                <span class="matches--6 matches--wicket">W</span>
-                <span class="matches--6 matches--dot">0</span>
-                <span class="matches--6 matches--dot">0</span>
-                <span class="matches--6 matches--dot">0</span>
-                <span class="matches--6 matches--four">4</span>
-                <span class="matches--6 matches--wide">WD</span>
+                ${this._overSum(this._commentary.miniscore.recentOvsStats)}
               </span>
             </div>
             <p class="match--detail ${
@@ -341,64 +389,7 @@ class RenderMatch {
 
                 
 
-                <!-- End of over item -->
-                <div class="commentary-item--over">
-                  <div class="over--heading-item">
-                    <p class="over over-heading">
-                      <span class="over--sm">End of over</span> <span>38</span>
-                    </p>
-
-                    <p class="over bat-over">
-                      <span class="over--sm">Runs Scored: 5</span>
-                      <span>
-                        <span class="commentary--dot">0</span>
-                        <span class="commentary--dot">0</span>
-                        <span class="commentary--dot">0</span>
-                        <span class="commentary--four">4</span>
-                        <span class="commentary--wide">WD</span>
-                        <span class="commentary--dot">0</span>
-                      </span>
-                    </p>
-
-                    <p class="over bat-over-score">
-                      <span class="over--sm"
-                        >Australia's 2nd Innings Score After 38 Overs:</span
-                      >
-                      <span>89/8 (38ov)</span>
-                    </p>
-                    <p class="over batsmen--score">
-                      <span class="over--sm">Pat Cummins: 5*</span>
-                      <span>Nathon Lyon: 1</span>
-                    </p>
-
-                    <p class="over bowler--score">
-                      <span class="over--sm">Shaheen Afridi</span>
-                      <span>10-5-2-5</span>
-                    </p>
-                    <p class="over batsmen--crr">
-                      <span class="over--sm">Current Run Rate</span>
-                      <span>3.56</span>
-                    </p>
-                  </div>
-                </div>
-                <!-- ///////////////////////////////////////////// -->
-                <!-- Commentary item -->
-                <div class="commentary-item">
-                  <div class="commentary-item--balls">
-                    <span class="commentary-item--overs">38.6</span>
-                    <span
-                      class="commentary-item--runs matches--6 matches--byes"
-                    >
-                    
-                      6b</span
-                    >
-                  </div>
-                  <div class="commentary-item--info commentary--byes">
-                    Shaheen Afridi to Pat Cummins: Four! A swinging ball on the
-                    money edged away past Rizwan for four
-                  </div>
-                </div>
-                <!-- ///////////////////////////////////////////// -->
+                
               </div>
             </div>
             <div class="operations__content operations__content--3">
@@ -470,6 +461,28 @@ class RenderMatch {
     let markup = this._commentary.commentaryList.map(function (comm) {
       const overSep = function () {
         if (!comm.overSeparator) return;
+
+        const overSum = function (balls) {
+          let ballType;
+          let result = '';
+          for (let char of balls) {
+            char === 'W' ? (ballType = 'wicket') : '';
+            char === '1' ? (ballType = 'single') : '';
+            char === '2' ? (ballType = 'double') : '';
+            char === 'L1' ? (ballType = 'byes') : '';
+            char === 'B1' ? (ballType = 'byes') : '';
+            char === '3' ? (ballType = 'triple') : '';
+            char === 'WD' ? (ballType = 'wide') : '';
+            char === 'NB' ? (ballType = 'no-ball') : '';
+            char === '4' ? (ballType = 'four') : '';
+            char === '6' ? (ballType = 'six') : '';
+            char === '0' ? (ballType = 'dot') : '';
+            // char === ' ' ? (ballType = 'hidden') : '';
+            result += `<span class="commentary--${ballType}">${char}</span>`;
+          }
+          return result;
+        };
+
         return `
         <div class="commentary-item--over">
                   <div class="over--heading-item">
@@ -484,12 +497,8 @@ class RenderMatch {
                         comm.overSeparator.runs
                       }</span>
                       <span>
-                        <span class="commentary--dot">0</span>
-                        <span class="commentary--dot">0</span>
-                        <span class="commentary--dot">0</span>
-                        <span class="commentary--four">4</span>
-                        <span class="commentary--wide">WD</span>
-                        <span class="commentary--dot">0</span>
+                      ${overSum(comm.overSeparator.o_summary)}
+                       
                       </span>
                     </p>
 
@@ -525,7 +534,7 @@ class RenderMatch {
                     <p class="over batsmen--crr">
                       <span class="over--sm">Current Run Rate</span>
                       <span>${(
-                        comm.overSeparator.runs /
+                        comm.overSeparator.score /
                         (comm.overSeparator.overNum + 0.4)
                       ).toFixed(2)}</span>
                     </p>
@@ -565,9 +574,10 @@ class RenderMatch {
       } else {
         let ballType;
         text.includes('out') ? (ballType = 'wicket') : '';
-        text.includes(', no run,') || text.includes('no run')
-          ? (ballType = 'dot')
+        text.includes(', wide,') || text.includes('wide')
+          ? (ballType = 'wide')
           : '';
+
         text.includes(', 1 run,') || text.includes('1 run')
           ? (ballType = 'single')
           : '';
@@ -577,16 +587,23 @@ class RenderMatch {
         text.includes(', 3 runs,') || text.includes('3 runs')
           ? (ballType = 'triple')
           : '';
-        text.includes(', SIX,') || text.includes('SIX')
+        text.includes(', SIX,') ||
+        text.includes('SIX') ||
+        text.includes('6 runs')
           ? (ballType = 'six')
           : '';
-        text.includes(', FOUR,') || text.includes('FOUR')
+        text.includes(', FOUR,') ||
+        text.includes('FOUR') ||
+        text.includes('4 runs')
           ? (ballType = 'four')
           : '';
-        text.includes(', wide,') ? (ballType = 'wide') : '';
+
         text.includes(', no ball,') ? (ballType = 'no-ball') : '';
         text.includes('leg byes, 1 run,') ? (ballType = 'byes') : '';
         text.includes('Run Out!!') ? (ballType = 'wicket') : '';
+        text.includes(', no run,') || text.includes('no run')
+          ? (ballType = 'dot')
+          : '';
 
         let runs;
         ballType === 'wicket' ? (runs = 'W') : '';

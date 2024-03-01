@@ -2,6 +2,7 @@
 
 import { renderNews } from './renderNews.js';
 import { renderScoreCard, renderPreviewMatch } from './scoreCard.js';
+import { renderSpinner } from './config.js';
 
 const matchesCardContainer = document.querySelector('.matches-container');
 
@@ -50,6 +51,11 @@ const getCricket = async function () {
   };
 
   try {
+    window.location.pathname.endsWith('index.html') ||
+    window.location.pathname === '/'
+      ? renderSpinner(matchesCardContainer)
+      : '';
+
     const response = await fetch(url, options);
     const result = await response.json();
     console.log(result);
@@ -74,10 +80,10 @@ const getCricket = async function () {
         state.matchArr.push(matchToRender);
       })
     );
-    // state.matchArr = series.flat();
+    // state2.matchArr = series.flat();
 
     // console.log(series.flat());
-
+    matchesCardContainer.innerHTML = '';
     seriesM.forEach(match =>
       match.matches.forEach(matchToRender => {
         // console.log(matchToRender, 111111111);
@@ -94,11 +100,19 @@ const getCricket = async function () {
     );
 
     console.log(seriesMatches);
+    // state = state2;
   } catch (error) {
     console.error(error);
   }
 };
 await getCricket();
+
+// if (
+//   window.location.pathname === '/index.html' ||
+//   window.location.pathname === '/'
+// ) {
+//   await getCricket();
+// }
 ///////////////////////////////////////////////////////////
 
 const getNews = async function () {

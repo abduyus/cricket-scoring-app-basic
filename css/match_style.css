@@ -250,6 +250,12 @@ html {
   color: #fff !important;
 }
 
+.matches--slash {
+  background-color: transparent;
+  color: #bebebe !important;
+  width: 2rem !important;
+}
+
 .match--detail {
   font-size: 1.8rem;
   color: #777;
@@ -449,6 +455,10 @@ tbody tr:nth-child(even) {
 .commentary--six {
   color: #7a41d8;
   /* color: #fff !important; */
+}
+
+.matches--hidden {
+  display: none;
 }
 
 .commentary-item {

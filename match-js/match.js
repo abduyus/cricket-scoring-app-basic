@@ -1,4 +1,7 @@
 import renderMatch from './renderMatch.js';
+import { renderSpinner } from '../js/config.js';
+
+const parentElement = document.querySelector('.section-result');
 
 const getJSON = function (url, options, errorMsg = 'Something went wrong') {
   return fetch(url, options).then(response => {
@@ -33,6 +36,7 @@ const getMatchData = async function () {
   };
 
   try {
+    renderMatch.renderSpinner();
     const response = await Promise.all([
       getJSON(url, options),
       getJSON(urlComm, optionsComm),
@@ -40,6 +44,7 @@ const getMatchData = async function () {
     console.log(response);
     // const result = await response.json();
     renderMatch._render(response);
+
     console.log(result);
   } catch (error) {
     console.error(error, '⚠️⚠️⚠️');

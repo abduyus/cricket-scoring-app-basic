@@ -1,5 +1,3 @@
-import { formatDate } from './formatDate.js';
-
 const matchesCardContainer = document.querySelector('.matches-container');
 
 const renderScoreCard = function (data) {
@@ -131,7 +129,7 @@ const renderScoreCard = function (data) {
     >
   </div>
       `;
-
+  // matchesCardContainer.innerHTML = '';
   matchesCardContainer.insertAdjacentHTML('beforeend', html);
 };
 
@@ -186,7 +184,7 @@ const renderPreviewMatch = function (data) {
     >
   </div>
       `;
-
+  // matchesCar dContainer.innerHTML = '';
   matchesCardContainer.insertAdjacentHTML('beforeend', html);
 };
 export { renderScoreCard, renderPreviewMatch };
