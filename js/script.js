@@ -2,9 +2,10 @@
 
 import { renderNews } from './renderNews.js';
 import { renderScoreCard, renderPreviewMatch } from './scoreCard.js';
-import { API_KEY_1, renderSpinner } from './config.js';
+import { API_KEY_1, API_KEY_2, renderSpinner } from './config.js';
 
 const matchesCardContainer = document.querySelector('.matches-container');
+const newsContainer = document.querySelector('.news-list');
 
 const dateString = '20240117063000';
 // console.log(formatDate(dateString)); // Outputs: "6:30 Today" (if today's date is 2024-01-17)
@@ -104,7 +105,7 @@ const getCricket = async function (API_KEY) {
     console.error(error);
   }
 };
-await getCricket(API_KEY_1);
+await getCricket(API_KEY_2);
 
 // if (
 //   window.location.pathname === '/index.html' ||
@@ -125,11 +126,16 @@ const getNews = async function () {
   };
 
   try {
+    window.location.pathname.endsWith('index.html') ||
+    window.location.pathname === '/'
+      ? renderSpinner(newsContainer)
+      : '';
     const response = await fetch(url, options);
     const result = await response.json();
     console.log(result);
 
     const newsList = result.storyList.slice(0, 4); // Get the first 3 elements
+    newsContainer.innerHTML = '';
     newsList.forEach(news => {
       if (!news.story) return;
 
@@ -141,6 +147,8 @@ const getNews = async function () {
 };
 
 // await getNews();
+
+// export { getNews, getCricket };
 
 const matches = document.querySelectorAll('.match');
 let matchItm;

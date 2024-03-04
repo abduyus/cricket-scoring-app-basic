@@ -1,7 +1,11 @@
 .header {
   background-color: #f1f1f1;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
+}
+
+.logo-img {
+  height: 8rem;
 }
 
 .nav-links {

@@ -49,5 +49,6 @@ export const renderNews = async function (data) {
                 </div>
               </li>
             </a>`;
+
   newsContainer.insertAdjacentHTML('afterbegin', markup);
 };

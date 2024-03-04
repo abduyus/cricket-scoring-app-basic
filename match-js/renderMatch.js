@@ -18,6 +18,8 @@ class RenderMatch {
   _bowlScoreBoard;
   _batScoreBoardT1;
   _batScoreBoardT2;
+  _stadium;
+  _imageObj;
 
   constructor() {
     this._getImage();
@@ -66,24 +68,23 @@ class RenderMatch {
   }
 
   _getImage() {
-    let imageObj = state.matchArr.filter(
+    this._imageObj = state.matchArr.filter(
       item => item.matchInfo.matchId === +window.location.hash.slice(1)
     );
-
     console.log(window.location.hash.slice(1), 3290393299999);
 
-    if (Array.isArray(imageObj) && imageObj.length > 0) {
-      // Access the property 'matchInfo' of the first element in 'imageObj'
-      console.log(imageObj[0].matchInfo);
+    if (Array.isArray(this._imageObj) && this._imageObj.length > 0) {
+      // Access the property 'matchInfo' of the first element in 'this._imageObj'
+      console.log(this._imageObj[0].matchInfo);
     } else {
-      console.error('imageObj is undefined or empty');
+      console.error('this._imageObj is undefined or empty');
     }
 
-    this._team1 = imageObj[0].matchInfo.team1.imageId;
-    this._team2 = imageObj[0].matchInfo.team2.imageId;
+    this._team1 = this._imageObj[0].matchInfo.team1.imageId;
+    this._team2 = this._imageObj[0].matchInfo.team2.imageId;
 
-    this._team1Name = imageObj[0].matchInfo.team1.teamName;
-    this._team2Name = imageObj[0].matchInfo.team2.teamName;
+    this._team1Name = this._imageObj[0].matchInfo.team1.teamName;
+    this._team2Name = this._imageObj[0].matchInfo.team2.teamName;
     // console.log(this._team1Name, 'skjhsdhfkjsfhksdkfh');
   }
 
@@ -111,7 +112,7 @@ class RenderMatch {
       char === 'Wd2' ? (ballType = 'wide') : '';
       char === 'Wd3' ? (ballType = 'wide') : '';
       char === 'Wd5' ? (ballType = 'wide') : '';
-      char === 'NB' ? (ballType = 'no-ball') : '';
+      char === 'N' ? (ballType = 'no-ball') : '';
       char === 'NB2' ? (ballType = 'no-ball') : '';
       char === 'NB3' ? (ballType = 'no-ball') : '';
       char === 'NB4' ? (ballType = 'no-ball') : '';
@@ -129,6 +130,7 @@ class RenderMatch {
   }
 
   _generateMarkup() {
+    console.log(this._imageObj[0].matchInfo.venueInfo.ground);
     return `
     <div class="container">
           <p class="match-teams">${this._data.matchHeader.team1.name} vs ${
@@ -140,7 +142,9 @@ class RenderMatch {
             }</span>
             <span class="matches-stadium">${
               this._data.matchHeader.matchDescription
-            }</span>
+            }</span> 
+            &nbsp;|&nbsp;
+            <span class="matches-stadium">${`${this._imageObj[0].matchInfo.venueInfo.ground}, ${this._imageObj[0].matchInfo.venueInfo.city}`}</span> 
             &nbsp;|&nbsp;
             <span class="matches-format">${
               this._data.matchHeader.matchFormat
@@ -181,7 +185,7 @@ class RenderMatch {
                       `${inngs.scoreDetails.runs}/${inngs.scoreDetails.wickets}`
                   )
                     ? `${this._team1Score.map(
-                        inngs => inngs.scoreDetails.overs + ' ov'
+                        inngs => inngs.scoreDetails.overs + ' ov '
                       )}`
                     : ''
                 } </p>
@@ -237,7 +241,7 @@ class RenderMatch {
             
           </div>
 
-          <p class="matches--summary">${this._data.matchHeader.status}</p>
+          <p class="matches--summary">${this._data.status}</p>
 
           <div class="operations">
             <div class="operations__tab-container">
@@ -465,21 +469,40 @@ class RenderMatch {
         const overSum = function (balls) {
           let ballType;
           let result = '';
-          for (let char of balls) {
+
+          let values = balls.split(' '); // Split the string into an array of 1- or 2-character values;
+          console.log(values);
+          values.forEach(char => {
+            if (char === '...') return;
+            if (!char) return;
+
             char === 'W' ? (ballType = 'wicket') : '';
+            char === 'W1' ? (ballType = 'wicket') : '';
+            char === 'W2' ? (ballType = 'wicket') : '';
+            char === 'W3' ? (ballType = 'wicket') : '';
             char === '1' ? (ballType = 'single') : '';
             char === '2' ? (ballType = 'double') : '';
-            char === 'LB' ? (ballType = 'leg-byes') : '';
+            char === 'L1' ? (ballType = 'byes') : '';
             char === 'B1' ? (ballType = 'byes') : '';
             char === '3' ? (ballType = 'triple') : '';
-            char === 'WD' ? (ballType = 'wide') : '';
-            char === 'NB' ? (ballType = 'no-ball') : '';
+            char === 'Wd' ? (ballType = 'wide') : '';
+            char === 'Wd2' ? (ballType = 'wide') : '';
+            char === 'Wd3' ? (ballType = 'wide') : '';
+            char === 'Wd5' ? (ballType = 'wide') : '';
+            char === 'N' ? (ballType = 'no-ball') : '';
+            char === 'NB2' ? (ballType = 'no-ball') : '';
+            char === 'NB3' ? (ballType = 'no-ball') : '';
+            char === 'NB4' ? (ballType = 'no-ball') : '';
+            char === 'NB5' ? (ballType = 'no-ball') : '';
+            char === 'NB5' ? (ballType = 'no-ball') : '';
             char === '4' ? (ballType = 'four') : '';
             char === '6' ? (ballType = 'six') : '';
             char === '0' ? (ballType = 'dot') : '';
-            // char === ' ' ? (ballType = 'hidden') : '';
-            result += `<span class="commentary--${ballType}">${char}</span>`;
-          }
+            char === '|' ? (ballType = 'slash') : '';
+
+            result += `<span class="mar-rt-sm commentary--${ballType}">${char}</span>`;
+          });
+
           return result;
         };
 
@@ -496,7 +519,7 @@ class RenderMatch {
                       <span class="over--sm">Runs Scored: ${
                         comm.overSeparator.runs
                       }</span>
-                      <span>
+                      <span class="align-ct">
                       ${overSum(comm.overSeparator.o_summary)}
                        
                       </span>
@@ -510,7 +533,7 @@ class RenderMatch {
                       >
                       <span>${comm.overSeparator.score}/${
           comm.overSeparator.wickets
-        } (38ov)</span>
+        } (${comm.overSeparator.overNum + 0.4} ov)</span>
                     </p>
                     <p class="over batsmen--score">
                       <span class="over--sm">${
@@ -598,7 +621,9 @@ class RenderMatch {
           ? (ballType = 'four')
           : '';
 
-        text.includes(', no ball,') ? (ballType = 'no-ball') : '';
+        text.includes(', no ball,') || text.includes('no ball')
+          ? (ballType = 'no-ball')
+          : '';
         text.includes('leg byes, 1 run,') ? (ballType = 'leg-byes') : '';
         text.includes('Run Out!!') ? (ballType = 'wicket') : '';
         text.includes(', no run,') || text.includes('no run')

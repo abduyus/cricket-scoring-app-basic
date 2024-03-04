@@ -277,3 +277,16 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.logo-img {
+  height: 8rem;
+}
+
+.mar-rt-sm {
+  margin-right: 7px;
+}
+
+.align-ct {
+  max-width: 100rem;
+  margin: 0 auto;
+}
