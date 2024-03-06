@@ -113,11 +113,11 @@ class RenderMatch {
       char === 'Wd3' ? (ballType = 'wide') : '';
       char === 'Wd5' ? (ballType = 'wide') : '';
       char === 'N' ? (ballType = 'no-ball') : '';
-      char === 'NB2' ? (ballType = 'no-ball') : '';
-      char === 'NB3' ? (ballType = 'no-ball') : '';
-      char === 'NB4' ? (ballType = 'no-ball') : '';
-      char === 'NB5' ? (ballType = 'no-ball') : '';
-      char === 'NB5' ? (ballType = 'no-ball') : '';
+      char === 'N2' ? (ballType = 'no-ball') : '';
+      char === 'N3' ? (ballType = 'no-ball') : '';
+      char === 'N4' ? (ballType = 'no-ball') : '';
+      char === 'N5' ? (ballType = 'no-ball') : '';
+      char === 'N5' ? (ballType = 'no-ball') : '';
       char === '4' ? (ballType = 'four') : '';
       char === '6' ? (ballType = 'six') : '';
       char === '0' ? (ballType = 'dot') : '';
@@ -490,9 +490,9 @@ class RenderMatch {
             char === 'Wd3' ? (ballType = 'wide') : '';
             char === 'Wd5' ? (ballType = 'wide') : '';
             char === 'N' ? (ballType = 'no-ball') : '';
-            char === 'NB2' ? (ballType = 'no-ball') : '';
-            char === 'NB3' ? (ballType = 'no-ball') : '';
-            char === 'NB4' ? (ballType = 'no-ball') : '';
+            char === 'N2' ? (ballType = 'no-ball') : '';
+            char === 'N3' ? (ballType = 'no-ball') : '';
+            char === 'N4' ? (ballType = 'no-ball') : '';
             char === 'NB5' ? (ballType = 'no-ball') : '';
             char === 'NB5' ? (ballType = 'no-ball') : '';
             char === '4' ? (ballType = 'four') : '';
@@ -597,7 +597,7 @@ class RenderMatch {
       } else {
         let ballType;
         text.includes('out') ? (ballType = 'wicket') : '';
-        text.includes(', wide,') || text.includes('wide')
+        text.includes(', wide,') || text.includes('wide ')
           ? (ballType = 'wide')
           : '';
 

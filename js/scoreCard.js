@@ -1,7 +1,7 @@
 const matchesCardContainer = document.querySelector('.matches-container');
 
 const renderScoreCard = function (data) {
-  console.log(data);
+  console.log(data.matchInfo, 'sdjfjsdjsjk ');
   if (!matchesCardContainer) return;
   // let resultT1 = data.Events[0].Tr1CW1
   //   ? "/" + data.Events[0].Tr1CW1
@@ -135,7 +135,7 @@ const renderScoreCard = function (data) {
 
 const renderPreviewMatch = function (data) {
   const html = `
-    <div class="match">
+    <div class="match" data-id="${data.matchInfo.matchId}">
     <p class="match-info">
       <span class="match-live--status">${data.matchInfo.state}</span> &bull;
       <span class="match-date">${data.matchInfo.matchDesc}</span> &bull;
