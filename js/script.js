@@ -2,7 +2,7 @@
 
 import { renderNews } from './renderNews.js';
 import { renderScoreCard, renderPreviewMatch } from './scoreCard.js';
-import { API_KEY_1, API_KEY_2, renderSpinner } from './config.js';
+import { API_KEY_1, API_KEY_2, API_KEY_3, renderSpinner } from './config.js';
 
 const matchesCardContainer = document.querySelector('.matches-container');
 const newsContainer = document.querySelector('.news-list');
@@ -105,7 +105,7 @@ const getCricket = async function (API_KEY) {
     console.error(error);
   }
 };
-await getCricket(API_KEY_2);
+await getCricket(API_KEY_3);
 
 // if (
 //   window.location.pathname === '/index.html' ||

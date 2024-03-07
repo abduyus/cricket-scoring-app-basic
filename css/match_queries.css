@@ -1,0 +1,84 @@
+/* For laptops 1200px */
+@media (max-width: 75em) {
+  th,
+  td {
+    padding: 1rem 1.5rem;
+    font-size: 1.5rem;
+  }
+  .over {
+    font-size: 1.5rem;
+  }
+
+  .over--sm {
+    font-size: 1.6rem;
+  }
+}
+
+/* For small laptops: 1072px  */
+@media (max-width: 67em) {
+  .match-info {
+    font-size: 1.6rem;
+  }
+  .matches-status--live {
+    padding: 0.5rem 1rem;
+    margin-right: 0.8rem;
+  }
+
+  .over {
+    padding: 1rem;
+  }
+
+  .grid {
+    gap: 2.4rem;
+  }
+}
+
+/* FOr large tablets: 896px */
+@media (max-width: 56em) {
+  .over {
+    padding: 0.6rem;
+    /* border-bottom: 2px solid #fff; */
+  }
+
+  .over--heading-item {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 2.4rem;
+  }
+
+  .grid--2-cols {
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+  }
+
+  th,
+  td {
+    /* padding: 1.2rem 2.4rem; */
+    font-size: 1.8rem;
+  }
+
+  .matches--last-6balls {
+    font-size: 1.8rem;
+  }
+
+  .matches--last-6balls span {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (max-width: 47em) {
+  th,
+  td {
+    /* padding: 1rem 1.5rem; */
+    font-size: 1.6rem;
+  }
+
+  .live--bat-desc {
+    font-size: 1.5rem;
+  }
+
+  .matches--last-6balls {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}

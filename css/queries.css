@@ -1,0 +1,8 @@
+@media (max-width: 82em) {
+  .section-matches {
+    padding: 0;
+  }
+  .matches-container {
+    border-radius: 0;
+  }
+}

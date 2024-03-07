@@ -33,7 +33,7 @@ const getMatchData = async function (API_KEY) {
     method: 'GET',
     headers: {
       // 'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
-      'X-RapidAPI-Key': '882d15899amsh2467631ba6e7cb6p12ca8ajsn0647d2efeab2',
+      'X-RapidAPI-Key': API_KEY,
       // 'X-RapidAPI-Key': 'aff1df6c51mshdaba1429286e586p192fb1jsncaf64292633d',
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
     },
@@ -56,7 +56,7 @@ const getMatchData = async function (API_KEY) {
 };
 
 try {
-  await getMatchData(API_KEY_2);
+  await getMatchData(API_KEY_3);
 } catch (error) {
   console.error(error, '⚠️⚠️⚠️');
 }

@@ -184,7 +184,8 @@ html {
 }
 
 .matches--last-6balls {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
   gap: 1.6rem;
   align-items: center;
   /* justify-content: center; */
@@ -518,7 +519,8 @@ tbody tr:nth-child(even) {
 }
 
 .over--heading-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   align-items: center;
   justify-content: center;
   /* gap: 2.4rem; */

@@ -105,9 +105,9 @@ class RenderMatch {
       char === 'W3' ? (ballType = 'wicket') : '';
       char === '1' ? (ballType = 'single') : '';
       char === '2' ? (ballType = 'double') : '';
+      char === '3' ? (ballType = 'triple') : '';
       char === 'L1' ? (ballType = 'byes') : '';
       char === 'B1' ? (ballType = 'byes') : '';
-      char === '3' ? (ballType = 'triple') : '';
       char === 'Wd' ? (ballType = 'wide') : '';
       char === 'Wd2' ? (ballType = 'wide') : '';
       char === 'Wd3' ? (ballType = 'wide') : '';
@@ -116,7 +116,6 @@ class RenderMatch {
       char === 'N2' ? (ballType = 'no-ball') : '';
       char === 'N3' ? (ballType = 'no-ball') : '';
       char === 'N4' ? (ballType = 'no-ball') : '';
-      char === 'N5' ? (ballType = 'no-ball') : '';
       char === 'N5' ? (ballType = 'no-ball') : '';
       char === '4' ? (ballType = 'four') : '';
       char === '6' ? (ballType = 'six') : '';
@@ -144,7 +143,9 @@ class RenderMatch {
               this._data.matchHeader.matchDescription
             }</span> 
             &nbsp;|&nbsp;
-            <span class="matches-stadium">${`${this._imageObj[0].matchInfo.venueInfo.ground}, ${this._imageObj[0].matchInfo.venueInfo.city}`}</span> 
+            <span class="matches-stadium">${
+              this._imageObj[0].matchInfo.venueInfo.city
+            }</span> 
             &nbsp;|&nbsp;
             <span class="matches-format">${
               this._data.matchHeader.matchFormat
@@ -588,6 +589,9 @@ class RenderMatch {
           comm.commentaryFormats.bold.formatValue[2]
         );
       }
+      if (text.includes('\n')) {
+        text = text.replace(/\n/g, '<br>');
+      }
       if (!comm.overNumber) {
         html = `
         <div class="commentary-item">
@@ -596,10 +600,10 @@ class RenderMatch {
         `;
       } else {
         let ballType;
-        text.includes('out') ? (ballType = 'wicket') : '';
         text.includes(', wide,') || text.includes('wide ')
           ? (ballType = 'wide')
           : '';
+        text.includes('out') ? (ballType = 'wicket') : '';
 
         text.includes(', 1 run,') || text.includes('1 run')
           ? (ballType = 'single')
@@ -626,6 +630,9 @@ class RenderMatch {
           : '';
         text.includes('leg byes, 1 run,') ? (ballType = 'leg-byes') : '';
         text.includes('Run Out!!') ? (ballType = 'wicket') : '';
+        text.includes(', out Stumped!!') || text.includes('out Stumped!!')
+          ? (ballType = 'wicket')
+          : '';
         text.includes(', no run,') || text.includes('no run')
           ? (ballType = 'dot')
           : '';
