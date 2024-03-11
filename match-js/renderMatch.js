@@ -216,7 +216,7 @@ class RenderMatch {
                       `${inngs.scoreDetails.runs}/${inngs.scoreDetails.wickets}`
                   )
                     ? `${this._team2Score.map(
-                        inngs => inngs.scoreDetails.overs + ' ov'
+                        inngs => inngs.scoreDetails.overs + ' ov '
                       )}`
                     : ''
                 }</p>
@@ -589,6 +589,12 @@ class RenderMatch {
           comm.commentaryFormats.bold.formatValue[2]
         );
       }
+      if (text.includes('B3$')) {
+        text = text.replace(
+          /B3\$/g,
+          comm.commentaryFormats.bold.formatValue[3]
+        );
+      }
       if (text.includes('\n')) {
         text = text.replace(/\n/g, '<br>');
       }
@@ -600,10 +606,18 @@ class RenderMatch {
         `;
       } else {
         let ballType;
-        text.includes(', wide,') || text.includes('wide ')
+        text.includes(', wide,') ||
+        text.includes('wide ') ||
+        text.includes(', 5 wides,') ||
+        text.includes(' 5 wides') ||
+        text.includes(', 2 wides,') ||
+        text.includes(' 2 wides') ||
+        text.includes(' 3 wides')
           ? (ballType = 'wide')
           : '';
-        text.includes('out') ? (ballType = 'wicket') : '';
+        text.includes(' out ') || text.includes(', out ')
+          ? (ballType = 'wicket')
+          : '';
 
         text.includes(', 1 run,') || text.includes('1 run')
           ? (ballType = 'single')
@@ -628,8 +642,18 @@ class RenderMatch {
         text.includes(', no ball,') || text.includes('no ball')
           ? (ballType = 'no-ball')
           : '';
-        text.includes('leg byes, 1 run,') ? (ballType = 'leg-byes') : '';
-        text.includes('Run Out!!') ? (ballType = 'wicket') : '';
+        text.includes('leg byes, 1 run,') || text.includes(', leg byes,')
+          ? (ballType = 'leg-byes')
+          : '';
+        text.includes(', byes, 1 run,') || text.includes(' byes ')
+          ? (ballType = 'byes')
+          : '';
+        text.includes('Run Out!!') ||
+        text.includes(', out ') ||
+        text.includes(', out Caught ') ||
+        text.includes(' out Caught ')
+          ? (ballType = 'wicket')
+          : '';
         text.includes(', out Stumped!!') || text.includes('out Stumped!!')
           ? (ballType = 'wicket')
           : '';
@@ -735,8 +759,8 @@ class RenderMatch {
           <td class="live--bat-name">${bowler.bowlName}</td>
           <td class="live--bat-runs">${bowler.overs}</td>
           <td class="live--bat-score">${bowler.runs}</td>
-          <td class="live--bat-score">${bowler.wickets}</td>
-          <td class="live--bat-desc">${bowler.economy}</td>
+          <td class="live--bat-desc">${bowler.wickets}</td>
+          <td class="live--bat-score">${bowler.economy}</td>
         </tr>
       `
         )
