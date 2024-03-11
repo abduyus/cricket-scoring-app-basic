@@ -45,6 +45,7 @@ class RenderMatch {
       inngs => inngs.bowlTeamDetails
     );
 
+    console.log(this._team1Score);
     const markup = this._generateMarkup();
     this._clear();
     document.title = `${this._data.matchHeader.team1.name} vs ${this._data.matchHeader.team2.name}`;
@@ -176,7 +177,9 @@ class RenderMatch {
                   ${this._team1Score
                     .map(
                       inngs =>
-                        `${inngs.scoreDetails.runs}/${inngs.scoreDetails.wickets}`
+                        `${inngs.scoreDetails.runs}/${
+                          inngs.scoreDetails.wickets
+                        }${inngs.scoreDetails.isDeclared ? 'd' : ''}`
                     )
                     .join(' & ')}
                 </p>
@@ -207,7 +210,9 @@ class RenderMatch {
                 <p class="matches--team2-total">${this._team2Score
                   .map(
                     inngs =>
-                      `${inngs.scoreDetails.runs}/${inngs.scoreDetails.wickets}`
+                      `${inngs.scoreDetails.runs}/${
+                        inngs.scoreDetails.wickets
+                      }${inngs.scoreDetails.isDeclared ? 'd' : ''}`
                   )
                   .join(' & ')}</p>
                 <p class="matches--team2-overs">${
