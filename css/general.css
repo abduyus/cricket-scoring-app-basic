@@ -13,6 +13,7 @@ secondary color: #e54624
 
 html {
   font-size: 62.5%;
+  overflow-x: hidden;
 }
 
 * {
@@ -290,4 +291,16 @@ body {
 .align-ct {
   max-width: 100rem;
   margin: 0 auto;
+}
+
+.btn-mobile-nav {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: none;
+}
+.icon-mobile-nav {
+  height: 4.8rem;
+  width: 4.8rem;
+  color: #333;
 }

@@ -40,7 +40,7 @@ const getCricket = async function (API_KEY) {
   //     "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
   //   },
   // };
-  const url = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live';
+  const url = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent';
   const options = {
     method: 'GET',
     headers: {
@@ -116,12 +116,19 @@ await getCricket(API_KEY_3);
 ///////////////////////////////////////////////////////////
 
 const getNews = async function () {
-  const url = 'https://cricbuzz-cricket.p.rapidapi.com/news/v1/index';
+  if (
+    !(
+      window.location.pathname.endsWith('index.html') ||
+      window.location.pathname === '/'
+    )
+  )
+    return;
+  const url = 'https://unofficial-cricbuzz.p.rapidapi.com/news/list';
   const options = {
     method: 'GET',
     headers: {
       'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
-      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
+      'X-RapidAPI-Host': 'unofficial-cricbuzz.p.rapidapi.com',
     },
   };
 
@@ -134,7 +141,7 @@ const getNews = async function () {
     const result = await response.json();
     console.log(result);
 
-    const newsList = result.storyList.slice(0, 4); // Get the first 3 elements
+    const newsList = result.newsList.slice(0, 4); // Get the first 3 elements
     newsContainer.innerHTML = '';
     newsList.forEach(news => {
       if (!news.story) return;
@@ -146,7 +153,7 @@ const getNews = async function () {
   }
 };
 
-// await getNews();
+await getNews();
 
 // export { getNews, getCricket };
 

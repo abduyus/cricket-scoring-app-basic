@@ -6,29 +6,39 @@
     <link rel="stylesheet" href="css/general.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/match_style.css" />
+    <link rel="stylesheet" href="css/queries.css" />
+
     <title>cricscore - News</title>
     <script defer type="module" src="news/news.js"></script>
   </head>
   <body>
     <header class="header">
-      <nav class="nav">
-        <div>
-          <img src="img/cricscore.png" alt="CricScore Logo" class="logo-img" />
-        </div>
-        <div>
-          <ul class="nav-links">
-            <li class="nav-object">
-              <a href="/index.html" class="main-nav-link">Home</a>
-            </li>
-            <li class="nav-object">
-              <a href="#" class="main-nav-link">News</a>
-            </li>
-            <li class="nav-object">
-              <a href="#" class="main-nav-link">Matches</a>
-            </li>
-          </ul>
-        </div>
+      <a href="index.html">
+        <img src="img/cricscore.png" alt="CricScore Logo" class="logo-img" />
+      </a>
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li class="nav-object">
+            <a href="/index.html" class="main-nav-link">Home</a>
+          </li>
+          <li class="nav-object">
+            <a href="/news.html" class="main-nav-link">News</a>
+          </li>
+          <li class="nav-object">
+            <a href="#" class="main-nav-link">Matches</a>
+          </li>
+        </ul>
       </nav>
+      <button class="btn-mobile-nav">
+        <ion-icon
+          class="icon-mobile-nav open-btn"
+          name="menu-outline"
+        ></ion-icon>
+        <ion-icon
+          class="icon-mobile-nav close-btn"
+          name="close-outline"
+        ></ion-icon>
+      </button>
     </header>
     <main class="mar-top-md">
       <div class="news-list"></div>

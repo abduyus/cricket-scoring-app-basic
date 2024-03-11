@@ -7,7 +7,7 @@ html {
   background-color: #fff;
 }
 
-.nav {
+.main-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,9 +107,9 @@ html {
 }
 
 .matches--team1-img {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
+  width: 4.8rem;
+  height: 3.6rem;
+  /* border-radius: 50%; */
   margin-left: 1.6rem;
   margin-right: 1.6rem;
   box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.17);
@@ -142,9 +142,9 @@ html {
 }
 
 .matches--team2-img {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
+  width: 4.8rem;
+  height: 3.6rem;
+  /* border-radius: 50%; */
   margin-left: 1.6rem;
   margin-right: 1.6rem;
   box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.17);
@@ -185,7 +185,9 @@ html {
 
 .matches--last-6balls {
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
+  grid-template-columns: repeat(17, 1fr);
+  justify-items: center;
+  align-items: center;
   gap: 1.6rem;
   align-items: center;
   /* justify-content: center; */
