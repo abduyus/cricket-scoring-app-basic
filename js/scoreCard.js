@@ -1,7 +1,7 @@
 const matchesCardContainer = document.querySelector('.matches-container');
 
 const renderScoreCard = function (data) {
-  console.log(data.matchInfo, 'sdjfjsdjsjk ');
+  console.log(data, 'sdjfjsdjsjk ');
   if (!matchesCardContainer) return;
   // let resultT1 = data.Events[0].Tr1CW1
   //   ? "/" + data.Events[0].Tr1CW1
@@ -77,7 +77,7 @@ const renderScoreCard = function (data) {
       : data.matchScore.team1Score.inngs1.runs !== undefined
       ? '/0'
       : ' '
-  }${
+  }${data?.matchScore?.team1Score?.inngs1?.isDeclared ? 'd ' : ''}${
     data.matchScore.team1Score.inngs2?.runs
       ? ' & ' + data.matchScore.team1Score.inngs2?.runs
       : ' '
@@ -87,7 +87,7 @@ const renderScoreCard = function (data) {
       : data.matchScore.team1Score.inngs2?.runs !== undefined
       ? '/0'
       : ' '
-  }</span>
+  }${data?.matchScore?.team1Score?.inngs2?.isDeclared ? 'd ' : ''}</span>
           <span class="team-overs team1-overs">${
             data?.matchScore.team1Score.inngs1.overs
               ? data.matchScore.team1Score.inngs1.overs
@@ -105,7 +105,7 @@ const renderScoreCard = function (data) {
       : data?.matchScore?.team2Score?.inngs1?.runs !== undefined
       ? '/0'
       : ' '
-  }${
+  }${data?.matchScore?.team2Score?.inngs1?.isDeclared ? 'd ' : ''}${
     data?.matchScore?.team2Score?.inngs2?.runs
       ? ' & ' + data.matchScore.team2Score.inngs2.runs
       : ' '
@@ -115,7 +115,7 @@ const renderScoreCard = function (data) {
       : data?.matchScore?.team2Score?.inngs2?.runs !== undefined
       ? '/0'
       : ' '
-  }</span>
+  }${data?.matchScore?.team2Score?.inngs2?.isDeclared ? 'd ' : ''}</span>
           <span class="team-overs team2-overs">${
             data?.matchScore?.team2Score?.inngs1?.overs
               ? data.matchScore.team2Score.inngs1?.overs
