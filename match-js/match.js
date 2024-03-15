@@ -1,3 +1,4 @@
+import state from '../js/script.js';
 import renderMatch from './renderMatch.js';
 import {
   renderSpinner,
@@ -45,18 +46,24 @@ const getMatchData = async function (API_KEY) {
       getJSON(url, options),
       getJSON(urlComm, optionsComm),
     ]);
+
     console.log(response);
     // const result = await response.json();
-    renderMatch._render(response);
+    const imageObj = state.matchArr.filter(
+      item => item.matchInfo.matchId === +window.location.hash.slice(1)
+    );
 
-    console.log(result);
+    console.log(imageObj);
+    imageObj[0].matchScore
+      ? renderMatch._render(response)
+      : renderMatch._renderPreview(response);
   } catch (error) {
     console.error(error, '⚠️⚠️⚠️');
   }
 };
 
 try {
-  await getMatchData(API_KEY_3);
+  await getMatchData(API_KEY_2);
 } catch (error) {
   console.error(error, '⚠️⚠️⚠️');
 }

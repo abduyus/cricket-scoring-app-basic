@@ -1,3 +1,4 @@
+import { formatRelativeTime } from './date.js';
 const newsContainer = document.querySelector('.news-list');
 
 export const renderNews = async function (data) {
@@ -30,7 +31,9 @@ export const renderNews = async function (data) {
 
   const markup = `
    <a
-              href="https://www.cricbuzz.com/cricket-news/${data.story.id}/${headline}"
+              href="https://www.cricbuzz.com/cricket-news/${
+                data.story.id
+              }/${headline}"
               target="_blank"
               class="news--link"
             >
@@ -45,7 +48,9 @@ export const renderNews = async function (data) {
                 <div class="news-item--header-div">
                   <span class="news-item--header">${data.story.hline}</span>
                   <span class="news-item--desc">${data.story.intro}</span>
-                  <span class="news-item--date">3 hours ago</span>
+                  <span class="news-item--date">${formatRelativeTime(
+                    +data.story.pubTime
+                  )}</span>
                 </div>
               </li>
             </a>`;

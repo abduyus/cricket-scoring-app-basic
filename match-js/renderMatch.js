@@ -51,6 +51,16 @@ class RenderMatch {
     document.title = `${this._data.matchHeader.team1.name} vs ${this._data.matchHeader.team2.name}`;
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
+  _renderPreview(data) {
+    this._data = data[0];
+    this._commentary = data[1];
+
+    console.log(this._team1Score);
+    const markup = this._generatePreview();
+    this._clear();
+    document.title = `${this._data.matchHeader.team1.name} vs ${this._data.matchHeader.team2.name}`;
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
 
   renderSpinner() {
     const markup = `
@@ -106,9 +116,15 @@ class RenderMatch {
       char === 'W3' ? (ballType = 'wicket') : '';
       char === '1' ? (ballType = 'single') : '';
       char === '2' ? (ballType = 'double') : '';
-      char === '3' ? (ballType = 'triple') : '';
       char === 'L1' ? (ballType = 'byes') : '';
+      char === 'L2' ? (ballType = 'byes') : '';
+      char === 'L3' ? (ballType = 'byes') : '';
+      char === 'L4' ? (ballType = 'byes') : '';
       char === 'B1' ? (ballType = 'byes') : '';
+      char === 'B2' ? (ballType = 'byes') : '';
+      char === 'B3' ? (ballType = 'byes') : '';
+      char === 'B4' ? (ballType = 'byes') : '';
+      char === '3' ? (ballType = 'triple') : '';
       char === 'Wd' ? (ballType = 'wide') : '';
       char === 'Wd2' ? (ballType = 'wide') : '';
       char === 'Wd3' ? (ballType = 'wide') : '';
@@ -117,7 +133,8 @@ class RenderMatch {
       char === 'N2' ? (ballType = 'no-ball') : '';
       char === 'N3' ? (ballType = 'no-ball') : '';
       char === 'N4' ? (ballType = 'no-ball') : '';
-      char === 'N5' ? (ballType = 'no-ball') : '';
+      char === 'NB5' ? (ballType = 'no-ball') : '';
+      char === 'NB5' ? (ballType = 'no-ball') : '';
       char === '4' ? (ballType = 'four') : '';
       char === '6' ? (ballType = 'six') : '';
       char === '0' ? (ballType = 'dot') : '';
@@ -466,6 +483,178 @@ class RenderMatch {
             </div>
         </div>`;
   }
+  _generatePreview() {
+    console.log(this._imageObj[0].matchInfo.venueInfo.ground);
+    return `
+    <div class="container">
+          <p class="match-teams">${this._data.matchHeader.team1.name} vs ${
+      this._data.matchHeader.team2.name
+    }</p>
+          <p class="match-info">
+            <span class="matches-status--live">${
+              this._data.matchHeader.state
+            }</span>
+            <span class="matches-stadium">${
+              this._data.matchHeader.matchDescription
+            }</span> 
+            &nbsp;|&nbsp;
+            <span class="matches-stadium">${
+              this._imageObj[0].matchInfo.venueInfo.city
+            }</span> 
+            &nbsp;|&nbsp;
+            <span class="matches-format">${
+              this._data.matchHeader.matchFormat
+            }</span> &nbsp;|&nbsp;
+            <span class="matches-league"
+              ><a class="matches-league--link" href="#"
+                >${this._data.matchHeader.seriesName}</a
+              ></span
+            >
+          </p>
+
+          <div class="matches">
+            <div class="matches-scores">
+              <div class="matches--team1--score">
+                <img
+                  src="http://api.cricbuzz.com/a/img/v1/i1/c${
+                    this._team1Name === this._data.matchHeader.team1.name
+                      ? this._team1
+                      : this._team2
+                  }/i.jpg?p=gt&d=high"
+                  alt="Flag of ${this._data.matchHeader.team1.name}"
+                  class="matches--team1-img"
+                />
+                <p class="matches--team1">${
+                  this._data.matchHeader.team1.name
+                }</p>
+                <p class="matches--team1-total">
+                  
+                </p>
+                <p class="matches--team1-overs"> </p>
+              </div>
+              <div class="matches--team2--score">
+                <img
+                  src="http://api.cricbuzz.com/a/img/v1/i1/c${
+                    this._team2Name === this._data.matchHeader.team2.name
+                      ? this._team2
+                      : this._team1
+                  }/i.jpg?p=gt&d=high"
+                  alt="Flag of ${this._data.matchHeader.team2.name}"
+                  class="matches--team2-img"
+                />
+                <p class="matches--team2">${
+                  this._data.matchHeader.team2.name
+                }</p>
+                <p class="matches--team2-total"></p>
+                <p class="matches--team2-overs"></p>
+              </div>
+              <span class="matches--last-6balls">
+     
+              </span>
+            </div>
+            
+            
+          </div>
+
+          <p class="matches--summary">${this._data.status}</p>
+
+          <div class="operations">
+            <div class="operations__tab-container">
+              <button
+                class="btn operations__tab operations__tab--1 operations__tab--active"
+                data-tab="1"
+              >
+                <span>📡</span>Live
+              </button>
+              <button
+                class="btn operations__tab operations__tab--2"
+                data-tab="2"
+              >
+                <span>🗣️</span>Commentary
+              </button>
+              <button
+                class="btn operations__tab operations__tab--3"
+                data-tab="3"
+              >
+                <span>🥇</span>Scorecard
+              </button>
+            </div>
+           
+
+            <div class="operations__content operations__content--2">
+              <div class="commentary">
+                
+                ${this._renderCommentary()}
+
+                
+
+                
+              </div>
+            </div>
+            <div class="operations__content operations__content--3">
+              
+
+              
+              <!--<div class="flex gap--sm align-center mar-top-md">
+                <p class="yet-to-bat">Yet to Bat:</p>
+                <p class="yet-to-batsmen">
+                  ....., ........, ..... ..., ......, ....
+                </p>
+              </div>-->
+            </div>
+          </div>
+            <div class="operations__content operations__content--4">
+              <div class="grid grid--2-cols">
+                <div>
+                  <h5 class="operations__header squad">Pakistan Squad</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Player</th>
+                        <th>Role</th>
+                      </tr>
+                    </thead>
+                    <tbody class="scoreboard">
+                      <tr>
+                        <td class="live--bat-name">Babar Azam</td>
+                        <td class="live--bat-score">Right handed batsmen</td>
+                      </tr>
+                      <tr>
+                        <td class="live--bat-name">Mohammad Rizwan</td>
+                        <td class="live--bat-score">
+                          Wicket Keeper & right handed batsmen
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <h5 class="operations__header squad">Pakistan Squad</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Player</th>
+                        <th>Role</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="live--bat-name">Babar Azam</td>
+                        <td class="live--bat-score">Right handed batsmen</td>
+                      </tr>
+                      <tr>
+                        <td class="live--bat-name">Mohammad Rizwan</td>
+                        <td class="live--bat-score">
+                          Wicket Keeper & right handed batsmen
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>`;
+  }
 
   _renderCommentary() {
     let markup = this._commentary.commentaryList.map(function (comm) {
@@ -489,7 +678,13 @@ class RenderMatch {
             char === '1' ? (ballType = 'single') : '';
             char === '2' ? (ballType = 'double') : '';
             char === 'L1' ? (ballType = 'byes') : '';
+            char === 'L2' ? (ballType = 'byes') : '';
+            char === 'L3' ? (ballType = 'byes') : '';
+            char === 'L4' ? (ballType = 'byes') : '';
             char === 'B1' ? (ballType = 'byes') : '';
+            char === 'B2' ? (ballType = 'byes') : '';
+            char === 'B3' ? (ballType = 'byes') : '';
+            char === 'B4' ? (ballType = 'byes') : '';
             char === '3' ? (ballType = 'triple') : '';
             char === 'Wd' ? (ballType = 'wide') : '';
             char === 'Wd2' ? (ballType = 'wide') : '';
@@ -650,7 +845,9 @@ class RenderMatch {
         text.includes('leg byes, 1 run,') || text.includes(', leg byes,')
           ? (ballType = 'leg-byes')
           : '';
-        text.includes(', byes, 1 run,') || text.includes(' byes ')
+        text.includes(', byes, 1 run,') ||
+        text.includes(' byes ') ||
+        text.includes(', byes, 2 run,')
           ? (ballType = 'byes')
           : '';
         text.includes('Run Out!!') ||

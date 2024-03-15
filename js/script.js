@@ -40,7 +40,7 @@ const getCricket = async function (API_KEY) {
   //     "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
   //   },
   // };
-  const url = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent';
+  const url = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live';
   const options = {
     method: 'GET',
     headers: {
@@ -105,7 +105,7 @@ const getCricket = async function (API_KEY) {
     console.error(error);
   }
 };
-await getCricket(API_KEY_3);
+await getCricket(API_KEY_2);
 
 // if (
 //   window.location.pathname === '/index.html' ||
@@ -138,6 +138,7 @@ const getNews = async function () {
       ? renderSpinner(newsContainer)
       : '';
     const response = await fetch(url, options);
+    console.log(response);
     const result = await response.json();
     console.log(result);
 

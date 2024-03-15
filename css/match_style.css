@@ -5,6 +5,8 @@ html {
 .header {
   /* padding: 2.4rem 0; */
   background-color: #fff;
+  display: flex;
+  justify-content: space-around;
 }
 
 .main-nav {
