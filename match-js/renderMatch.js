@@ -48,7 +48,8 @@ class RenderMatch {
     console.log(this._team1Score);
     const markup = this._generateMarkup();
     this._clear();
-    document.title = `${this._data.matchHeader.team1.name} vs ${this._data.matchHeader.team2.name}`;
+    console.log(this._data.matchHeader.team1);
+    document.title = `${this._data.matchHeader.team1.shortName} vs ${this._data.matchHeader.team2.shortName}`;
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
   _renderPreview(data) {
