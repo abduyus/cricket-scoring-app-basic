@@ -1,7 +1,6 @@
 const matchesCardContainer = document.querySelector('.matches-container');
 
 const renderScoreCard = function (data) {
-  console.log(data, 'sdjfjsdjsjk ');
   if (!matchesCardContainer) return;
   // let resultT1 = data.Events[0].Tr1CW1
   //   ? "/" + data.Events[0].Tr1CW1

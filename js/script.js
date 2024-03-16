@@ -28,6 +28,15 @@ const state = {
 
 export default state;
 
+function isNotOlderThanYesterday(timestamp) {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  yesterday.setHours(0, 0, 0, 0); // Set the time to 00:00:00.000
+
+  const date = new Date(timestamp);
+
+  return date >= yesterday;
+}
 // FOR CRICBUZZ API FOR LIVESCORE
 ///////////////////////////////////////////////////////////
 const getCricket = async function (API_KEY) {
@@ -41,6 +50,9 @@ const getCricket = async function (API_KEY) {
   //   },
   // };
   const url = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live';
+  const urlRecent = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent';
+  const urlUpcoming =
+    'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming';
   const options = {
     method: 'GET',
     headers: {
@@ -50,27 +62,36 @@ const getCricket = async function (API_KEY) {
     },
   };
 
+  // Implement the urlRecent using Promise.all
+  //  check if the match is less older than yesterday or not and if it is then render it
+
   try {
     window.location.pathname.endsWith('index.html') ||
     window.location.pathname === '/'
       ? renderSpinner(matchesCardContainer)
       : '';
 
-    const response = await fetch(url, options);
-    const result = await response.json();
-    console.log(result);
-    const seriesMatches = result.typeMatches.map(match => match.seriesMatches);
+    const response = await Promise.all([
+      fetch(url, options),
+      fetch(urlRecent, options),
+    ]);
+
+    const result = await response[0].json();
+    const resultrec = await response[1].json();
+
+    const seriesMatches =
+      result.typeMatches.map(match => match.seriesMatches) &&
+      resultrec.typeMatches.map(match => match.seriesMatches);
 
     const series = seriesMatches.map(array => {
-      // console.log(array);
       return array
         .map(obj => {
           if (!obj.seriesAdWrapper) return null;
+
           return obj.seriesAdWrapper;
         })
         .filter(Boolean); // this will remove null values
     });
-    // console.log(series, "hhhhhhhhh");
 
     const seriesM = series.flat();
     console.log(seriesM);
@@ -82,23 +103,20 @@ const getCricket = async function (API_KEY) {
     );
     // state2.matchArr = series.flat();
 
-    // console.log(series.flat());
     matchesCardContainer.innerHTML = '';
     seriesM.forEach(match =>
       match.matches.forEach(matchToRender => {
-        // console.log(matchToRender, 111111111);
         state.matchArr.push(matchToRender);
-        console.log(state);
-        if (matchToRender.hasOwnProperty('matchScore')) {
-          // console.log(matchToRender, 333333);
-          renderScoreCard(matchToRender);
-        } else {
-          // console.log(matchToRender, 2222222);
-          renderPreviewMatch(matchToRender);
+
+        if (isNotOlderThanYesterday(+matchToRender.matchInfo.startDate)) {
+          if (matchToRender.hasOwnProperty('matchScore')) {
+            renderScoreCard(matchToRender);
+          } else {
+            renderPreviewMatch(matchToRender);
+          }
         }
       })
     );
-
     console.log(seriesMatches);
     // state = state2;
   } catch (error) {
@@ -154,7 +172,7 @@ const getNews = async function () {
   }
 };
 
-await getNews();
+// await getNews();
 
 // export { getNews, getCricket };
 
