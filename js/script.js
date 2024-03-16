@@ -94,7 +94,7 @@ const getCricket = async function (API_KEY) {
     });
 
     const seriesM = series.flat();
-    console.log(seriesM);
+    // console.log(seriesM);
 
     await seriesM.forEach(match =>
       match.matches.forEach(matchToRender => {
@@ -117,7 +117,7 @@ const getCricket = async function (API_KEY) {
         }
       })
     );
-    console.log(seriesMatches);
+    // console.log(seriesMatches);
     // state = state2;
   } catch (error) {
     console.error(error);
@@ -156,9 +156,9 @@ const getNews = async function () {
       ? renderSpinner(newsContainer)
       : '';
     const response = await fetch(url, options);
-    console.log(response);
+    // console.log(response);
     const result = await response.json();
-    console.log(result);
+    // console.log(result);
 
     const newsList = result.newsList.slice(0, 4); // Get the first 3 elements
     newsContainer.innerHTML = '';
@@ -179,11 +179,11 @@ const getNews = async function () {
 const matches = document.querySelectorAll('.match');
 let matchItm;
 
-console.log(matches);
+// console.log(matches);
 
 matches.forEach(match =>
   match.addEventListener('click', async function (e) {
-    console.log(e.target.closest('.match'));
+    // console.log(e.target.closest('.match'));
     const matchItm = e.target.closest('.match');
 
     if (!matchItm) return;
@@ -246,6 +246,6 @@ fetch(
     });
   })
   .catch((err) => {
-    console.log("An error occured. Please check your code", err);
+      ("An error occured. Please check your code", err);
   });
 */
