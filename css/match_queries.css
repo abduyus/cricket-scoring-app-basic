@@ -146,9 +146,16 @@
     width: 3.5rem;
     height: 3.5rem;
   }
+
+  .matches-league--link:link,
+  .matches-league--link:visited {
+    font-size: inherit;
+  }
 }
 
-@media (max-width: 48em) {
+/* For small tablets: 784px */
+
+@media (max-width: 49em) {
   th,
   td {
     /* padding: 1rem 1.5rem; */
@@ -164,5 +171,51 @@
     /* grid-template-columns: repeat(auto-fill, minmax(auto, 1fr)); */
 
     grid-template-columns: repeat(7, 4.2rem);
+  }
+
+  .match-teams,
+  .matches--team1,
+  .matches--team2 {
+    font-size: 2rem;
+  }
+
+  .matches--team1-total,
+  .matches--team2-total {
+    font-size: 1.6rem;
+  }
+  .matches--team1-overs,
+  .matches--team2-overs {
+    font-size: 1.4rem;
+  }
+  .commentary-item--info {
+    font-size: 1.5rem;
+  }
+  .match-info {
+    font-size: 1.3rem;
+  }
+
+  .matches--team1--score,
+  .matches--team2--score,
+  .matches--last-6balls {
+    justify-content: center;
+  }
+
+  .match--detail,
+  .matches--summary,
+  .match-teams,
+  .match-info {
+    text-align: center;
+  }
+}
+
+@media (max-width: 41rem) {
+  .match-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    align-content: start;
+  }
+  .match-info span.pipe {
+    display: none;
   }
 }
