@@ -1,4 +1,5 @@
 // renderMatch.js
+import { formatRelativeTime } from '../js/date.js';
 import state from '../js/script.js';
 
 console.log(state.matchArr); // Will log ['some value']
@@ -147,6 +148,21 @@ class RenderMatch {
     return result;
   }
 
+  _renderDate() {
+    const date = new Date(this._data.matchHeader.matchStartTimestamp); // Replace with your date
+
+    const options = {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'long',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+    const dateString = date.toLocaleString('en-GB', options);
+
+    return dateString;
+  }
+
   _generateMarkup() {
     console.log(this._imageObj[0].matchInfo.venueInfo.ground);
     return `
@@ -161,19 +177,20 @@ class RenderMatch {
             <span class="matches-stadium">${
               this._data.matchHeader.matchDescription
             }</span> 
-            &nbsp;|&nbsp;
+            <span class="pipe">&nbsp;|&nbsp;</span>
             <span class="matches-stadium">${
               this._imageObj[0].matchInfo.venueInfo.city
             }</span> 
-            &nbsp;|&nbsp;
+            <span class="pipe">&nbsp;|&nbsp;</span>
             <span class="matches-format">${
               this._data.matchHeader.matchFormat
-            }</span> &nbsp;|&nbsp;
+            }</span> <span class="pipe">&nbsp;|&nbsp;</span>
             <span class="matches-league"
               ><a class="matches-league--link" href="#"
                 >${this._data.matchHeader.seriesName}</a
-              ></span
-            >
+              ></span>
+             <span class="pipe">&nbsp;|&nbsp;</span>
+             <span class="matches-format">${this._renderDate()}</span>
           </p>
 
           <div class="matches">

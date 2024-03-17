@@ -78,6 +78,7 @@ const getCricket = async function (API_KEY) {
 
     const result = await response[0].json();
     const resultrec = await response[1].json();
+    // console.log(resultrec);
 
     const seriesMatches =
       result.typeMatches.map(match => match.seriesMatches) &&
