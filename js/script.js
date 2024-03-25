@@ -2,7 +2,13 @@
 
 import { renderNews } from './renderNews.js';
 import { renderScoreCard, renderPreviewMatch } from './scoreCard.js';
-import { API_KEY_1, API_KEY_2, API_KEY_3, renderSpinner } from './config.js';
+import {
+  API_KEY_1,
+  API_KEY_2,
+  API_KEY_3,
+  renderSpinner,
+  areObjectsEqual,
+} from './config.js';
 
 const matchesCardContainer = document.querySelector('.matches-container');
 const newsContainer = document.querySelector('.news-list');
@@ -62,9 +68,6 @@ const getCricket = async function (API_KEY) {
     },
   };
 
-  // Implement the urlRecent using Promise.all
-  //  check if the match is less older than yesterday or not and if it is then render it
-
   try {
     window.location.pathname.endsWith('index.html') ||
     window.location.pathname === '/'
@@ -80,9 +83,10 @@ const getCricket = async function (API_KEY) {
     const resultrec = await response[1].json();
     // console.log(resultrec);
 
-    const seriesMatches =
-      result.typeMatches.map(match => match.seriesMatches) &&
-      resultrec.typeMatches.map(match => match.seriesMatches);
+    const seriesMatches = [
+      ...result.typeMatches.map(match => match.seriesMatches),
+      ...resultrec.typeMatches.map(match => match.seriesMatches),
+    ];
 
     const series = seriesMatches.map(array => {
       return array
@@ -95,9 +99,8 @@ const getCricket = async function (API_KEY) {
     });
 
     const seriesM = series.flat();
-    // console.log(seriesM);
 
-    await seriesM.forEach(match =>
+    seriesM.forEach(match =>
       match.matches.forEach(matchToRender => {
         state.matchArr.push(matchToRender);
       })
@@ -105,7 +108,8 @@ const getCricket = async function (API_KEY) {
     // state2.matchArr = series.flat();
 
     matchesCardContainer.innerHTML = '';
-    seriesM.forEach(match =>
+    seriesM.forEach(match => {
+      // console.log(match);
       match.matches.forEach(matchToRender => {
         state.matchArr.push(matchToRender);
 
@@ -116,15 +120,15 @@ const getCricket = async function (API_KEY) {
             renderPreviewMatch(matchToRender);
           }
         }
-      })
-    );
+      });
+    });
     // console.log(seriesMatches);
     // state = state2;
   } catch (error) {
     console.error(error);
   }
 };
-await getCricket(API_KEY_2);
+await getCricket(API_KEY_3);
 
 // if (
 //   window.location.pathname === '/index.html' ||

@@ -63,7 +63,7 @@ const getMatchData = async function (API_KEY) {
 };
 
 try {
-  await getMatchData(API_KEY_2);
+  await getMatchData(API_KEY_3);
 } catch (error) {
   console.error(error, '⚠️⚠️⚠️');
 }

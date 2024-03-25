@@ -11,6 +11,23 @@ export const renderSpinner = function (parentElement) {
   parentElement.insertAdjacentHTML('afterbegin', markup);
 };
 
+export const areObjectsEqual = function (obj1, obj2) {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (let key of keys1) {
+    if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 export const API_KEY_1 = '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798';
 export const API_KEY_2 = '882d15899amsh2467631ba6e7cb6p12ca8ajsn0647d2efeab2';
 export const API_KEY_3 = 'aff1df6c51mshdaba1429286e586p192fb1jsncaf64292633d';

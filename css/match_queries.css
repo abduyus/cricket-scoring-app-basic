@@ -208,6 +208,7 @@
   }
 }
 
+/* 656px */
 @media (max-width: 41rem) {
   .match-info {
     display: grid;
@@ -217,5 +218,14 @@
   }
   .match-info span.pipe {
     display: none;
+  }
+
+  .btn.operations__tab {
+    font-size: 1.4rem;
+  }
+
+  .operations__tab-container {
+    gap: 1.2rem;
+    padding: 0.8rem 1rem;
   }
 }

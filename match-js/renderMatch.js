@@ -164,7 +164,7 @@ class RenderMatch {
   }
 
   _generateMarkup() {
-    console.log(this._imageObj[0].matchInfo.venueInfo.ground);
+    console.log(this._team1Score);
     return `
     <div class="container">
           <p class="match-teams">${this._data.matchHeader.team1.name} vs ${
@@ -206,7 +206,7 @@ class RenderMatch {
                   class="matches--team1-img"
                 />
                 <p class="matches--team1">${
-                  this._data.matchHeader.team1.name
+                  this._data.matchHeader.team1.shortName
                 }</p>
                 <p class="matches--team1-total">
                   ${this._team1Score
@@ -240,7 +240,7 @@ class RenderMatch {
                   class="matches--team2-img"
                 />
                 <p class="matches--team2">${
-                  this._data.matchHeader.team2.name
+                  this._data.matchHeader.team2.shortName
                 }</p>
                 <p class="matches--team2-total">${this._team2Score
                   .map(
@@ -813,6 +813,30 @@ class RenderMatch {
           comm.commentaryFormats.bold.formatValue[3]
         );
       }
+      if (text.includes('I0$')) {
+        text = text.replace(
+          /I0\$/g,
+          comm.commentaryFormats.italic.formatValue[0]
+        );
+      }
+      if (text.includes('I1$')) {
+        text = text.replace(
+          /I1\$/g,
+          comm.commentaryFormats.italic.formatValue[1]
+        );
+      }
+      if (text.includes('I2$')) {
+        text = text.replace(
+          /I2\$/g,
+          comm.commentaryFormats.italic.formatValue[2]
+        );
+      }
+      if (text.includes('I3$')) {
+        text = text.replace(
+          /I3\$/g,
+          comm.commentaryFormats.italic.formatValue[3]
+        );
+      }
       if (text.includes('\n')) {
         text = text.replace(/\n/g, '<br>');
       }
@@ -836,16 +860,6 @@ class RenderMatch {
         text.includes(' out ') || text.includes(', out ')
           ? (ballType = 'wicket')
           : '';
-
-        text.includes(', 1 run,') || text.includes('1 run')
-          ? (ballType = 'single')
-          : '';
-        text.includes(', 2 runs,') || text.includes('2 runs')
-          ? (ballType = 'double')
-          : '';
-        text.includes(', 3 runs,') || text.includes('3 runs')
-          ? (ballType = 'triple')
-          : '';
         text.includes(', SIX,') ||
         text.includes('SIX') ||
         text.includes('6 runs')
@@ -855,6 +869,16 @@ class RenderMatch {
         text.includes('FOUR') ||
         text.includes('4 runs')
           ? (ballType = 'four')
+          : '';
+
+        text.includes(', 1 run,') || text.includes('1 run')
+          ? (ballType = 'single')
+          : '';
+        text.includes(', 2 runs,') || text.includes('2 runs')
+          ? (ballType = 'double')
+          : '';
+        text.includes(', 3 runs,') || text.includes('3 runs')
+          ? (ballType = 'triple')
           : '';
 
         text.includes(', no ball,') || text.includes('no ball')
