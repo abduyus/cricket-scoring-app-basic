@@ -177,7 +177,7 @@ const getNews = async function () {
   }
 };
 
-// await getNews();
+await getNews();
 
 // export { getNews, getCricket };
 
