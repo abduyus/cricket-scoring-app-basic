@@ -128,7 +128,7 @@ const getCricket = async function (API_KEY) {
     console.error(error);
   }
 };
-await getCricket(API_KEY_3);
+await getCricket(API_KEY_2);
 
 // if (
 //   window.location.pathname === '/index.html' ||
