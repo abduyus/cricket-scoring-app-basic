@@ -2,7 +2,7 @@
 import { formatRelativeTime } from '../js/date.js';
 import state from '../js/script.js';
 
-console.log(state.matchArr); // Will log ['some value']
+// console.log(state.matchArr); // Will log ['some value']
 
 class RenderMatch {
   _data;
@@ -46,10 +46,10 @@ class RenderMatch {
       inngs => inngs.bowlTeamDetails
     );
 
-    console.log(this._team1Score);
+    // console.log(this._team1Score);
     const markup = this._generateMarkup();
     this._clear();
-    console.log(this._data.matchHeader.team1);
+    // console.log(this._data.matchHeader.team1);
     document.title = `${this._data.matchHeader.team1.shortName} vs ${this._data.matchHeader.team2.shortName}`;
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
@@ -57,7 +57,7 @@ class RenderMatch {
     this._data = data[0];
     this._commentary = data[1];
 
-    console.log(this._team1Score);
+    // console.log(this._team1Score);
     const markup = this._generatePreview();
     this._clear();
     document.title = `${this._data.matchHeader.team1.name} vs ${this._data.matchHeader.team2.name}`;
@@ -84,13 +84,13 @@ class RenderMatch {
     this._imageObj = state.matchArr.filter(
       item => item.matchInfo.matchId === +window.location.hash.slice(1)
     );
-    console.log(window.location.hash.slice(1), 3290393299999);
+    // console.log(window.location.hash.slice(1), 3290393299999);
 
     if (Array.isArray(this._imageObj) && this._imageObj.length > 0) {
       // Access the property 'matchInfo' of the first element in 'this._imageObj'
-      console.log(this._imageObj[0].matchInfo);
+      // console.log(this._imageObj[0].matchInfo);
     } else {
-      console.error('this._imageObj is undefined or empty');
+      // console.error('this._imageObj is undefined or empty');
     }
 
     this._team1 = this._imageObj[0].matchInfo.team1.imageId;
@@ -107,7 +107,7 @@ class RenderMatch {
 
     let values = balls.split(' '); // Split the string into an array of 1- or 2-character values
     values.reverse();
-    console.log(values);
+    // console.log(values);
     values.forEach(char => {
       if (char === '...') return;
       if (!char) return;
@@ -164,7 +164,7 @@ class RenderMatch {
   }
 
   _generateMarkup() {
-    console.log(this._team1Score);
+    // console.log(this._team1Score);
     return `
     <div class="container">
           <p class="match-teams">${this._data.matchHeader.team1.name} vs ${
@@ -502,7 +502,7 @@ class RenderMatch {
         </div>`;
   }
   _generatePreview() {
-    console.log(this._imageObj[0].matchInfo.venueInfo.ground);
+    // console.log(this._imageObj[0].matchInfo.venueInfo.ground);
     return `
     <div class="container">
           <p class="match-teams">${this._data.matchHeader.team1.name} vs ${
@@ -684,7 +684,7 @@ class RenderMatch {
           let result = '';
 
           let values = balls.split(' '); // Split the string into an array of 1- or 2-character values;
-          console.log(values);
+          // console.log(values);
           values.forEach(char => {
             if (char === '...') return;
             if (!char) return;
@@ -989,13 +989,13 @@ class RenderMatch {
 
       markup += html;
     });
-    console.log(this._bowlScoreBoard, '3839202-302-3-');
+    // console.log(this._bowlScoreBoard, '3839202-302-3-');
     return markup;
   }
   _renderBowlScoreBoard() {
     let markup = '';
     this._bowlScoreBoard.forEach(inng => {
-      console.log(inng);
+      // console.log(inng);
       const rows = Object.values(inng.bowlersData)
         .map(
           bowler => `
@@ -1032,7 +1032,7 @@ class RenderMatch {
 
       markup += html;
     });
-    console.log(this._bowlScoreBoard, '3839202-302-3-');
+    // console.log(this._bowlScoreBoard, '3839202-302-3-');
     return markup;
   }
 
