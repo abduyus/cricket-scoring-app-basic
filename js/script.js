@@ -1,30 +1,30 @@
-'use strict';
+"use strict";
 
-import { renderNews } from './renderNews.js';
-import { renderScoreCard, renderPreviewMatch } from './scoreCard.js';
+import { renderNews } from "./renderNews.js";
+import { renderScoreCard, renderPreviewMatch } from "./scoreCard.js";
 import {
   API_KEY_1,
   API_KEY_2,
   API_KEY_3,
   renderSpinner,
   areObjectsEqual,
-} from './config.js';
+} from "./config.js";
 
-const matchesCardContainer = document.querySelector('.matches-container');
-const newsContainer = document.querySelector('.news-list');
+const matchesCardContainer = document.querySelector(".matches-container");
+const newsContainer = document.querySelector(".news-list");
 
-const dateString = '20240117063000';
+const dateString = "20240117063000";
 // console.log(formatDate(dateString)); // Outputs: "6:30 Today" (if today's date is 2024-01-17)
 
 // Select the elements
-const elements = document.querySelectorAll('.score');
+const elements = document.querySelectorAll(".score");
 
 // Loop through each element
-elements.forEach(element => {
+elements.forEach((element) => {
   // Check if the text content is empty
-  if (element.textContent.trim() === '') {
+  if (element.textContent.trim() === "") {
     // Set the width to 0
-    element.style.width = '0';
+    element.style.width = "0";
   }
 });
 
@@ -55,24 +55,24 @@ const getCricket = async function (API_KEY) {
   //     "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
   //   },
   // };
-  const url = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live';
-  const urlRecent = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent';
+  const url = "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live";
+  const urlRecent = "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent";
   const urlUpcoming =
-    'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming';
+    "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming";
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'X-RapidAPI-Key': API_KEY,
+      "X-RapidAPI-Key": API_KEY,
 
-      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
+      "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
     },
   };
 
   try {
-    window.location.pathname.endsWith('index.html') ||
-    window.location.pathname === '/'
+    window.location.pathname.endsWith("index.html") ||
+    window.location.pathname === "/"
       ? renderSpinner(matchesCardContainer)
-      : '';
+      : "";
 
     const response = await Promise.all([
       fetch(url, options),
@@ -84,13 +84,13 @@ const getCricket = async function (API_KEY) {
     // console.log(resultrec);
 
     const seriesMatches = [
-      ...result.typeMatches.map(match => match.seriesMatches),
-      ...resultrec.typeMatches.map(match => match.seriesMatches),
+      ...result.typeMatches.map((match) => match.seriesMatches),
+      ...resultrec.typeMatches.map((match) => match.seriesMatches),
     ];
 
-    const series = seriesMatches.map(array => {
+    const series = seriesMatches.map((array) => {
       return array
-        .map(obj => {
+        .map((obj) => {
           if (!obj.seriesAdWrapper) return null;
 
           return obj.seriesAdWrapper;
@@ -100,21 +100,21 @@ const getCricket = async function (API_KEY) {
 
     const seriesM = series.flat();
 
-    seriesM.forEach(match =>
-      match.matches.forEach(matchToRender => {
+    seriesM.forEach((match) =>
+      match.matches.forEach((matchToRender) => {
         state.matchArr.push(matchToRender);
       })
     );
     // state2.matchArr = series.flat();
 
-    matchesCardContainer.innerHTML = '';
-    seriesM.forEach(match => {
+    matchesCardContainer.innerHTML = "";
+    seriesM.forEach((match) => {
       // console.log(match);
-      match.matches.forEach(matchToRender => {
+      match.matches.forEach((matchToRender) => {
         state.matchArr.push(matchToRender);
 
         if (isNotOlderThanYesterday(+matchToRender.matchInfo.startDate)) {
-          if (matchToRender.hasOwnProperty('matchScore')) {
+          if (matchToRender.hasOwnProperty("matchScore")) {
             renderScoreCard(matchToRender);
           } else {
             renderPreviewMatch(matchToRender);
@@ -128,7 +128,7 @@ const getCricket = async function (API_KEY) {
     console.error(error);
   }
 };
-await getCricket(API_KEY_2);
+await getCricket(API_KEY_1);
 
 // if (
 //   window.location.pathname === '/index.html' ||
@@ -141,33 +141,33 @@ await getCricket(API_KEY_2);
 const getNews = async function () {
   if (
     !(
-      window.location.pathname.endsWith('index.html') ||
-      window.location.pathname === '/'
+      window.location.pathname.endsWith("index.html") ||
+      window.location.pathname === "/"
     )
   )
     return;
-  const url = 'https://unofficial-cricbuzz.p.rapidapi.com/news/list';
+  const url = "https://unofficial-cricbuzz.p.rapidapi.com/news/list";
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'X-RapidAPI-Key': '21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798',
-      'X-RapidAPI-Host': 'unofficial-cricbuzz.p.rapidapi.com',
+      "X-RapidAPI-Key": "21420ea0e8mshd4ecb966b8c5e38p157dc3jsn43b5b5e3b798",
+      "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
     },
   };
 
   try {
-    window.location.pathname.endsWith('index.html') ||
-    window.location.pathname === '/'
+    window.location.pathname.endsWith("index.html") ||
+    window.location.pathname === "/"
       ? renderSpinner(newsContainer)
-      : '';
+      : "";
     const response = await fetch(url, options);
     // console.log(response);
     const result = await response.json();
     // console.log(result);
 
     const newsList = result.newsList.slice(0, 4); // Get the first 3 elements
-    newsContainer.innerHTML = '';
-    newsList.forEach(news => {
+    newsContainer.innerHTML = "";
+    newsList.forEach((news) => {
       if (!news.story) return;
 
       renderNews(news);
@@ -181,15 +181,15 @@ await getNews();
 
 // export { getNews, getCricket };
 
-const matches = document.querySelectorAll('.match');
+const matches = document.querySelectorAll(".match");
 let matchItm;
 
 // console.log(matches);
 
-matches.forEach(match =>
-  match.addEventListener('click', async function (e) {
+matches.forEach((match) =>
+  match.addEventListener("click", async function (e) {
     // console.log(e.target.closest('.match'));
-    const matchItm = e.target.closest('.match');
+    const matchItm = e.target.closest(".match");
 
     if (!matchItm) return;
 
